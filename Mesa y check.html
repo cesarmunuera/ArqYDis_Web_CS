@@ -33,41 +33,55 @@
             }
         }
 
-        function accionBoton () {
+        function accionBoton() {
             // Accion del boton
         }
 
     </script>
+    <style type="text/css">
+        .select {
+            width: 500px;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- ESTO ES EL SELECTOR DE MESA -->
-    <select id="slct1" name="slct1" onchange="populate(this.id,'slct2')">
-        <option value="Mesa 1">Mesa 1</option>
-        <option value="Mesa 2">Mesa 2</option>
-        <option value="Mesa 3">Mesa 3</option>
-        <option value="Mesa 4">Mesa 4</option>
-        <option value="Mesa 5">Mesa 5</option>
-    </select>
+    <form>
+
+        <!-- ESTOS SON LOS RADIOS -->
+        <div>
+
+            <input type="radio" id="radio1" value="primeros_radio" name="drone">
+            <label for="primeros_radio">Primeros platos</label>
+        </div>
+        <div>
+            <input type="radio" id="radio2" value="segundos_radio" name="drone">
+            <label for="segundos_radio">Segundos platos</label>
+        </div>
+        <div>
+            <input type="radio" id="radio3" value="postres_radio" name="drone">
+            <label for="postres_radio">Postres</label>
+        </div>
+
+        <!-- ESTO ES EL SELECTOR DE MESA -->
+        <select id="slct1" class = "select" name="slct1" onchange="populate(this.id,'slct2')">
+            <option value="Mesa 1">Mesa 1</option>
+            <option value="Mesa 2">Mesa 2</option>
+            <option value="Mesa 3">Mesa 3</option>
+            <option value="Mesa 4">Mesa 4</option>
+            <option value="Mesa 5">Mesa 5</option>
+        </select>
+
+
+    </form>
+
 
     <!-- ESTO ES EL CHECK -->
     <hr />
     <input type="checkbox" id="cbox1" value="cafe_checkbox"> Con caf&eacute;<br>
     <input type="checkbox" id="cbox1" value="cafe_checkbox"> Con copa<br>
     <hr />
-    <!-- ESTOS SON LOS RADIOS -->
-    <div>
-        <input type="radio" id="radio1" value="primeros_radio" name="drone">
-        <label for="primeros_radio">Primeros platos</label>
-    </div>
-    <div>
-        <input type="radio" id="radio2" value="segundos_radio" name="drone">
-        <label for="segundos_radio">Segundos platos</label>
-    </div>
-    <div>
-        <input type="radio" id="radio3" value="postres_radio" name="drone">
-        <label for="postres_radio">Postres</label>
-    </div>
+
 
     <!-- ESTO ES EL BOTON-->
     <input type=button value="Pagar" onclick="accionBoton()">
