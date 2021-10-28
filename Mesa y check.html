@@ -1,0 +1,56 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        function populate(slct1, slct2) {
+            var s1 = document.getElementById(slct1);
+            var s2 = document.getElementById(slct2);
+            s2.innerHTML = "";
+            if (s1.value == "Mesa 1") {
+                //aqui metemos lo correspondiente a elegir dicha mesa
+                //var optionArray = ["mierda", ...];
+            } else if (s1.value == "Mesa 2") {
+                //aqui metemos lo correspondiente a elegir dicha mesa
+                //var optionArray = ["mierda", ...];
+            } else if (s1.value == "Mesa 3") {
+                //aqui metemos lo correspondiente a elegir dicha mesa
+                //var optionArray = ["mierda", ...];
+            } else if (s1.value == "Mesa 4") {
+                //aqui metemos lo correspondiente a elegir dicha mesa
+                //var optionArray = ["mierda", ...];
+            } else if (s1.value == "Mesa 5") {
+                //aqui metemos lo correspondiente a elegir dicha mesa
+                //var optionArray = ["mierda", ...];
+            }
+            for (var option in optionArray) {
+                if (optionArray.hasOwnProperty(option)) {
+                    var pair = optionArray[option];
+                    var newOption = document.createElement("option");
+                    newOption.value = pair;
+                    newOption.innerHTML = pair;
+                    s2.options.add(newOption);
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <!-- ESTO ES EL SELECTOR DE MESA -->
+    <select id="slct1" name="slct1" onchange="populate(this.id,'slct2')">
+        <option value="Mesa 1">Mesa 1</option>
+        <option value="Mesa 2">Mesa 2</option>
+        <option value="Mesa 3">Mesa 3</option>
+        <option value="Mesa 4">Mesa 4</option>
+        <option value="Mesa 5">Mesa 5</option>
+    </select>
+    
+    <!-- ESTO ES EL CHECK -->
+    <hr />
+    <input type="checkbox" id="cbox1" value="cafe_checkbox"> Con caf&eacute;<br>
+    <input type="checkbox" id="cbox1" value="cafe_checkbox"> Con copa<br>
+    <hr />
+
+</body>
+
+</html>
