@@ -37,6 +37,7 @@ function accionBoton() {
 
 //Inicializamos la tabla izquierda con los primeros platos
 function inicializarArrayPlatos(platosPricipales) {
+    $("#CajaMenu").empty();
     //Esta funcion setea el array que le pasas, en la caja de la izquierda
     platosPricipales.forEach(element => {
         $("#CajaMenu").prepend($('<option />', {
@@ -60,12 +61,24 @@ inicializarArrayPlatos(platosPricipales);
 
 
 //Ahora la logica de cambiar entre los distintos tipos de platos
-$("#radio1").click(function () {
+/*$("#radio1").click(function () {
     if ($("#radio").is(':checked')) {
         //Llamamos a la funcion de inicializarArrayPlatos
     } else {
         //El else supongo que sobra
     }
+});*/
+
+$("#radio1").click(function () {
+    inicializarArrayPlatos(platosPricipales);
+});
+
+$("#radio2").click(function () {
+    inicializarArrayPlatos(platosSegudos);
+});
+
+$("#radio3").click(function () {
+    inicializarArrayPlatos(platosPostres);
 });
 
 
