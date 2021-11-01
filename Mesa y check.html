@@ -1,43 +1,10 @@
 <html>
 
 <head>
-    <script type="text/javascript">
-        function populate(slct1, slct2) {
-            var s1 = document.getElementById(slct1);
-            var s2 = document.getElementById(slct2);
-            s2.innerHTML = "";
-            if (s1.value == "Mesa 1") {
-                //aqui metemos lo correspondiente a elegir dicha mesa
-                //var optionArray = ["mierda", ...];
-            } else if (s1.value == "Mesa 2") {
-                //aqui metemos lo correspondiente a elegir dicha mesa
-                //var optionArray = ["mierda", ...];
-            } else if (s1.value == "Mesa 3") {
-                //aqui metemos lo correspondiente a elegir dicha mesa
-                //var optionArray = ["mierda", ...];
-            } else if (s1.value == "Mesa 4") {
-                //aqui metemos lo correspondiente a elegir dicha mesa
-                //var optionArray = ["mierda", ...];
-            } else if (s1.value == "Mesa 5") {
-                //aqui metemos lo correspondiente a elegir dicha mesa
-                //var optionArray = ["mierda", ...];
-            }
-            for (var option in optionArray) {
-                if (optionArray.hasOwnProperty(option)) {
-                    var pair = optionArray[option];
-                    var newOption = document.createElement("option");
-                    newOption.value = pair;
-                    newOption.innerHTML = pair;
-                    s2.options.add(newOption);
-                }
-            }
-        }
+    <!--Esto es el link a la libreria JQuery-->
+    <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-        function accionBoton() {
-            // Accion del boton
-        }
 
-    </script>
     <style type="text/css">
         .cajaMenus {
             width: 200px;
@@ -90,13 +57,11 @@
     <br>
     <br>
     <br>
-    <select name="CajaMenu" class="cajaMenus" multiple>
-        <!--<option value="2" label="Opcion 2"> Opcion 2</option>
-        <option value="3" label="Opcion 3">Opcion 3 </option> 
-       xesto es lo que habria que poner dentro de la funcion de JS con un bucle for y la lista de alimentos-->
+
+    <select id="CajaMenu" name="CajaMenu" class="cajaMenus" multiple>
     </select>
 
-    <select name="CajaPlatosPedidos" class="cajaMenus" multiple>
+    <select id="CajaPlatosPedidos" name="CajaPlatosPedidos" class="cajaMenus" multiple>
         <!--<option value="2" label="Opcion 2"> Opcion 2 </option>
         <option value="3" label="Opcion 3"> Opcion 3</option>
         esto es lo que habria que poner dentro de la funcion de JS con un bucle for y la lista de alimentos-->
@@ -116,6 +81,10 @@
         <input type=button value="Pagar" onclick="accionBoton()">
     </form>
     <br>
+
+    <div id="prueba"></div>
+
+    <script src = "main.js"></script>
 
 </body>
 
