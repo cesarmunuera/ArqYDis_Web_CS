@@ -75,43 +75,47 @@ function inicializarArrayPlatos(platosPricipales) {
     });
 }
 
-function actualizarPrecio(plato) {
+function actualizarPrecio(datosPedidos) {
     var parar = false;
     var contador = 0;
     var precio = 0;
-    platosPricipales.forEach(element => {
-        if (plato == element) {
-            parar = true;
-            precio += preciosPlatosPricipales[contador];
-        }
-        contador++;
-    });
 
-    contador = 0;
-    if (parar == false) {
-        platosSegudos.forEach(element => {
+    datosPedidos.forEach(plato => {
+
+        platosPricipales.forEach(element => {
             if (plato == element) {
                 parar = true;
-                precio += preciosPlatosSegudos[contador];
+                precio += preciosPlatosPricipales[contador];
             }
             contador++;
         });
-    } else if (parar == false) {
+
         contador = 0;
-        platosPostres.forEach(element => {
-            if (plato == element) {
-                parar = true;
-                precio += preciosPlatosPostres[contador];
-            }
-            contador++;
-        });
-    }
+        if (parar == false) {
+            platosSegudos.forEach(element => {
+                if (plato == element) {
+                    parar = true;
+                    precio += preciosPlatosSegudos[contador];
+                }
+                contador++;
+            });
+        } else if (parar == false) {
+            contador = 0;
+            platosPostres.forEach(element => {
+                if (plato == element) {
+                    parar = true;
+                    precio += preciosPlatosPostres[contador];
+                }
+                contador++;
+            });
+        }
+
+    });
     return precio;
 }
 
 
 //-------------- FUNCIONES ----------------------------------------------------------------------------- ^^
-
 
 
 
@@ -192,11 +196,29 @@ $("#CajaMenu").on('change', function () {
 
 inicializarArrayPlatos(platosPricipales);
 
+
+
+$("#cbox1").on('click', function () {
+    if ($('#cbox1').is(':checked')) {
+        alert('Seleccionado');
+    } else {
+        alert('a');
+    }
+});
+$("#cbox2").on('click', function () {
+    if ($('#cbox2').is(':checked')) {
+        alert('Seleccionado');
+    } else {
+        alert('a');
+    }
+});
+
+
+$("#botonPagar").on('click', function () {
+    document.getElementById("cajaPrecio").value = "€";
+});
+
 //-------------- CODIGO PROGRAMA -------------- ESTO ES LO QUE SE VA  A EJECUTAR ^^
-
-
-//Hasta aqui
-
 
 /*Loica de poner los precios
 var parar = false;
@@ -231,10 +253,9 @@ if (parar == false) {
     });
 }
 
-document.getElementById("cajaPrecio").value = "My value";
-//Nose pq no va esta mierda
 
-//Hasta aqui */
+//Nose pq no va esta mierda
+*/
 
 
 
