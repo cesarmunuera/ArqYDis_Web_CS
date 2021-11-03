@@ -1,5 +1,32 @@
 
-function populate(slct1, slct2) {
+//-------------- VARIABLES ---------------------------------------------------------------------------
+let platosPricipales = ["Ensalada", "Macarrones", "Pure", "Cocido"];
+let preciosPlatosPricipales = [3, 4, 3, 4];
+let platosSegudos = ["Ternera", "Pescado", "Pollo", "Lomo"];
+let preciosPlatosSegudos = [4, 4, 3, 3];
+let platosPostres = ["Manzana", "Helado", "Yogur", "Tarta"];
+let preciosPlatosPostres = [2, 3, 2, 3];
+
+
+let platosPedidosM1 = [];
+let platosPedidosM2 = [];
+let platosPedidosM3 = [];
+let platosPedidosM4 = [];
+let platosPedidosM5 = [];
+
+let mesa1;
+let mesa2;
+let mesa3;
+let mesa4;
+let mesa5;
+var valor;
+
+
+//-------------- VARIABLES ------------------------------------------------------------------------------^^
+
+//-------------- FUNCIONES ------------------------------------------------------------------------------
+
+/*function populate(slct1, slct2) {
     var s1 = document.getElementById(slct1);
     var s2 = document.getElementById(slct2);
     s2.innerHTML = "";
@@ -29,7 +56,7 @@ function populate(slct1, slct2) {
         }
     }
 }
-
+*/
 
 function accionBoton() {
     // Accion del boton
@@ -48,16 +75,47 @@ function inicializarArrayPlatos(platosPricipales) {
     });
 }
 
-let platosPricipales = ["Ensalada", "Macarrones", "Pure", "Cocido"];
-let preciosPlatosPricipales = [3, 4, 3, 4];
-let platosSegudos = ["Ternera", "Pescado", "Pollo", "Lomo"];
-let preciosPlatosSegudos = [4, 4, 3, 3];
-let platosPostres = ["Manzana", "Helado", "Yogur", "Tarta"];
-let preciosPlatosPostres = [2, 3, 2, 3];
+function actualizarPrecio(plato) {
+    var parar = false;
+    var contador = 0;
+    var precio = 0;
+    platosPricipales.forEach(element => {
+        if (plato == element) {
+            parar = true;
+            precio += preciosPlatosPricipales[contador];
+        }
+        contador++;
+    });
 
-inicializarArrayPlatos(platosPricipales);
-//Hasta aqui
+    contador = 0;
+    if (parar == false) {
+        platosSegudos.forEach(element => {
+            if (plato == element) {
+                parar = true;
+                precio += preciosPlatosSegudos[contador];
+            }
+            contador++;
+        });
+    } else if (parar == false) {
+        contador = 0;
+        platosPostres.forEach(element => {
+            if (plato == element) {
+                parar = true;
+                precio += preciosPlatosPostres[contador];
+            }
+            contador++;
+        });
+    }
+    return precio;
+}
 
+
+//-------------- FUNCIONES ----------------------------------------------------------------------------- ^^
+
+
+
+
+//-------------- JQUERYS --------------------------------------------------------------------------------
 
 //Logica de cambiar entre los distintos tipos de platos
 $("#radio1").click(function () {
@@ -71,16 +129,53 @@ $("#radio2").click(function () {
 $("#radio3").click(function () {
     inicializarArrayPlatos(platosPostres);
 });
-//Hasta aqui
+
+
+//jquery para mostrar los platos pedidos de cada mesa cuando se cambia de mesa
+$("#slct1").on("change", function () {
+    $("#CajaPlatosPedidos").empty();
+    if (this.value == "Mesa1") {
+        platosPedidosM1.forEach(element => {
+            $("#CajaPlatosPedidos").prepend($('<option />', {
+                text: element,
+                value: element,
+            }));
+        });
+    } else if (this.value == "Mesa2") {
+        platosPedidosM2.forEach(element => {
+            $("#CajaPlatosPedidos").prepend($('<option />', {
+                text: element,
+                value: element,
+            }));
+        });
+    } else if (this.value == "Mesa3") {
+        platosPedidosM3.forEach(element => {
+            $("#CajaPlatosPedidos").prepend($('<option />', {
+                text: element,
+                value: element,
+            }));
+        });
+    } else if (this.value == "Mesa4") {
+        platosPedidosM4.forEach(element => {
+            $("#CajaPlatosPedidos").prepend($('<option />', {
+                text: element,
+                value: element,
+            }));
+        });
+    } else {
+        platosPedidosM5.forEach(element => {
+            $("#CajaPlatosPedidos").prepend($('<option />', {
+                text: element,
+                value: element,
+            }));
+        });
+    }
+
+});
 
 
 //Logica de almacenar los platos elegidos
-let mesa1;
-let mesa2;
-let mesa3;
-let mesa4;
-let mesa5;
-var valor;
+
 
 $("#CajaMenu").on('change', function () {
     var plato = $(this).val();
@@ -90,37 +185,46 @@ $("#CajaMenu").on('change', function () {
         text: plato,
         value: plato,
     }));
+    actualizarPrecio(plato);
 });
+
+//-------------- CODIGO PROGRAMA -------------- ESTO ES LO QUE SE VA A EJECUTAR 
+
+inicializarArrayPlatos(platosPricipales);
+
+//-------------- CODIGO PROGRAMA -------------- ESTO ES LO QUE SE VA  A EJECUTAR ^^
+
+
 //Hasta aqui
 
 
-//Loica de poner los precios
+/*Loica de poner los precios
 var parar = false;
 var contador = 0;
 var precio = 0;
 
 platosPricipales.forEach(element => {
-    contador ++; 
-    if(plato == element){
+    contador++;
+    if (plato == element) {
         parar = true;
         precio += preciosPlatosPricipales[contador];
     }
 });
 
 contador = 0;
-if (parar == false){
+if (parar == false) {
     platosSegudos.forEach(element => {
-        contador ++; 
-        if(plato == element){
+        contador++;
+        if (plato == element) {
             parar = true;
             precio += preciosPlatosSegudos[contador];
         }
     });
-}else if (parar == false){
+} else if (parar == false) {
     contador = 0;
     platosPostres.forEach(element => {
-        contador ++; 
-        if(plato == element){
+        contador++;
+        if (plato == element) {
             parar = true;
             precio += preciosPlatosPostres[contador];
         }
@@ -130,4 +234,8 @@ if (parar == false){
 document.getElementById("cajaPrecio").value = "My value";
 //Nose pq no va esta mierda
 
-//Hasta aqui
+//Hasta aqui */
+
+
+
+
