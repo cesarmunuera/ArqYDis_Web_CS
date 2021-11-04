@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .direccion {
+            width: 500px
+        }
+    </style>
+
+</head>
+
+<body>
+    <form name="ejemplo1">
+        Introduce tu email: <input type="email" name="email">
+        <input type="submit" value="Enviar">
+        <br>
+        <br>
+        Fecha nacimiento: <input type="date" name="cumpleanios" step="1" min="1800-01-01" max="2021-11-04"
+            value="2021-11-04">
+        <br>
+        <br>
+        <input type="text" name="nombre" placeholder="Escriba su nombre: " minlength="2" maxlength="40" required
+            pattern="[A-Z][a-z]+" />
+        <br>
+        <br>
+        <input type="text" name="direccion" class="direccion" placeholder="Escriba su direccion (pais/ciudad/calle/numero/puerta/cod.postal):
+         " minlength="2" maxlength="2000" required
+            pattern="[A-Z][a-z]+/[A-Z][a-z]+/[[A-Z][a-z]+[' ']]+/[0-9]+/[[0-9]+[A-Z]]?/[0-9][0-9][0-9][0-9][0-9]" />
+        <br>
+        <br>
+        <br>
+        <br>
+    </form>
+    <form>
+        <label for="card-number">Número de Tarjeta</label>
+        <input type="num" id="card-number" class="input-cart-number" maxlength="4" />
+        <input type="num" id="card-number-1" class="input-cart-number" maxlength="4" />
+        <input type="num" id="card-number-2" class="input-cart-number" maxlength="4" />
+        <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" />
+        <br>
+        <br>
+        <label for="card-expiration-month">Fecha de Expiración</label>
+        <select id="card-expiration-month">
+            <option></option>
+            <option>01</option>
+            <option>02</option>
+            <option>03</option>
+            <option>04</option>
+            <option>05</option>
+            <option>06</option>
+            <option>07</option>
+            <option>08</option>
+            <option>09</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+        <select id="card-expiration-year">
+            <option></option>
+            <option>2016</option>
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+            <option>2020</option>
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+            <option>2024</option>
+            <option>2025</option>
+        </select>
+        <br>
+        <br>
+        <label for="card-ccv">CCV</label>
+        <input type="text" id="card-ccv" maxlength="3" />
+    </form>
+</body>
+
+</html>
