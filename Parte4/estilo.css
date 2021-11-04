@@ -1,0 +1,96 @@
+.cajaMenus {
+    width: 200px;
+    height: 200px;
+    color: rgb(255, 255, 255);
+    background-color: #4d4d4b ;
+    border-radius: 10px;
+}
+
+.selecionableMesa {
+    position: relative;
+    left: 200px;
+    bottom: 45px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    background-color: #4d4d4b ;
+}
+
+.claseIzq {
+    position: relative;
+    left: 200px;
+    top: 10px;
+}
+
+.cajaPrecio{
+    color: rgb(255, 255, 255);
+    background-color: #585857 ;
+    border-radius: 10px;
+}
+
+.botonPagar{
+    color: rgb(241, 241, 241);
+    background-color: #8d8d8d ;
+    border-radius: 10px;
+}
+
+input[type='checkbox']:checked:after {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #474da1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 3px solid white;
+}
+input[type='checkbox']:after {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #d1d3d1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 3px solid white;
+}
+
+input[type='radio']:checked:after {
+    width: 7px;
+    height: 7px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #474da1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 3px solid white;
+}
+input[type='radio']:after {
+    width: 7px;
+    height: 7px;
+    border-radius: 15px;
+    top: -2px;
+    left: -1px;
+    position: relative;
+    background-color: #d1d3d1;
+    content: '';
+    display: inline-block;
+    visibility: visible;
+    border: 3px solid white;
+}
+
+
+body {
+    padding-left: 11em;
+    font-family: "Consolas", monospace;
+    color: rgb(255, 255, 255);
+    background-color: #30302f 
+}
