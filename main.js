@@ -21,47 +21,22 @@ let mesa4;
 let mesa5;
 var valor;
 
+var cafeM1 = false;
+var cafeM2 = false;
+var cafeM3 = false;
+var cafeM4 = false;
+var cafeM5 = false;
+
+var copaM1 = false;
+var copaM2 = false;
+var copaM3 = false;
+var copaM4 = false;
+var copaM5 = false;
+
 
 //-------------- VARIABLES ------------------------------------------------------------------------------^^
 
 //-------------- FUNCIONES ------------------------------------------------------------------------------
-
-/*function populate(slct1, slct2) {
-    var s1 = document.getElementById(slct1);
-    var s2 = document.getElementById(slct2);
-    s2.innerHTML = "";
-    if (s1.value == "Mesa 1") {
-        //aqui metemos lo correspondiente a elegir dicha mesa
-        //var optionArray = ["mierda", ...];
-    } else if (s1.value == "Mesa 2") {
-        //aqui metemos lo correspondiente a elegir dicha mesa
-        //var optionArray = ["mierda", ...];
-    } else if (s1.value == "Mesa 3") {
-        //aqui metemos lo correspondiente a elegir dicha mesa
-        //var optionArray = ["mierda", ...];
-    } else if (s1.value == "Mesa 4") {
-        //aqui metemos lo correspondiente a elegir dicha mesa
-        //var optionArray = ["mierda", ...];
-    } else if (s1.value == "Mesa 5") {
-        //aqui metemos lo correspondiente a elegir dicha mesa
-        //var optionArray = ["mierda", ...];
-    }
-    for (var option in optionArray) {
-        if (optionArray.hasOwnProperty(option)) {
-            var pair = optionArray[option];
-            var newOption = document.createElement("option");
-            newOption.value = pair;
-            newOption.innerHTML = pair;
-            s2.options.add(newOption);
-        }
-    }
-}
-*/
-
-function accionBoton() {
-    // Accion del boton
-}
-
 
 //Inicializamos la tabla izquierda con los primeros platos
 function inicializarArrayPlatos(platosPricipales) {
@@ -75,12 +50,14 @@ function inicializarArrayPlatos(platosPricipales) {
     });
 }
 
-function actualizarPrecio(datosPedidos) {
-    var parar = false;
-    var contador = 0;
+function CalcularPrecio(datosPedidos) {
+    var parar;
+    var contador;
     var precio = 0;
 
     datosPedidos.forEach(plato => {
+        parar = false;
+        contador = 0
 
         platosPricipales.forEach(element => {
             if (plato == element) {
@@ -99,7 +76,8 @@ function actualizarPrecio(datosPedidos) {
                 }
                 contador++;
             });
-        } else if (parar == false) {
+        }
+        if (parar == false) {
             contador = 0;
             platosPostres.forEach(element => {
                 if (plato == element) {
@@ -111,7 +89,25 @@ function actualizarPrecio(datosPedidos) {
         }
 
     });
+    if ($('#cbox1').is(':checked')) {
+        precio += 1;
+    }
+    if ($('#cbox2').is(':checked')) {
+        precio += 5;
+    }
     return precio;
+}
+
+function funcionMesa() {
+    if (document.getElementById("slct1").value == "Mesa1") {
+        return "Mesa1";
+    } else if (document.getElementById("slct1").value == "Mesa2") {
+        return "Mesa2";
+    } else if (document.getElementById("slct1").value == "Mesa3") {
+        return "Mesa3";
+    } else if (document.getElementById("slct1").value == "Mesa4") {
+        return "Mesa4";
+    } else return "Mesa5";
 }
 
 
@@ -135,7 +131,7 @@ $("#radio3").click(function () {
 });
 
 
-//jquery para mostrar los platos pedidos de cada mesa cuando se cambia de mesa
+//jquery para mostrar los platos pedidos de cada mesa cuando se vuelve a dicha mesa
 $("#slct1").on("change", function () {
     $("#CajaPlatosPedidos").empty();
     if (this.value == "Mesa1") {
@@ -145,6 +141,16 @@ $("#slct1").on("change", function () {
                 value: element,
             }));
         });
+        if (cafeM1) {
+            $("#cbox1").prop("checked", true);
+        }else{
+            $("#cbox1").prop("checked", false);
+        }
+        if (copaM1) {
+            $("#cbox2").prop("checked", true);
+        }else{
+            $("#cbox2").prop("checked", false);
+        }
     } else if (this.value == "Mesa2") {
         platosPedidosM2.forEach(element => {
             $("#CajaPlatosPedidos").prepend($('<option />', {
@@ -152,6 +158,16 @@ $("#slct1").on("change", function () {
                 value: element,
             }));
         });
+        if (cafeM2) {
+            $("#cbox1").prop("checked", true);
+        }else{
+            $("#cbox1").prop("checked", false);
+        }
+        if (copaM2) {
+            $("#cbox2").prop("checked", true);
+        }else{
+            $("#cbox2").prop("checked", false);
+        }
     } else if (this.value == "Mesa3") {
         platosPedidosM3.forEach(element => {
             $("#CajaPlatosPedidos").prepend($('<option />', {
@@ -159,6 +175,16 @@ $("#slct1").on("change", function () {
                 value: element,
             }));
         });
+        if (cafeM3) {
+            $("#cbox1").prop("checked", true);
+        }else{
+            $("#cbox1").prop("checked", false);
+        }
+        if (copaM3) {
+            $("#cbox2").prop("checked", true);
+        }else{
+            $("#cbox2").prop("checked", false);
+        }
     } else if (this.value == "Mesa4") {
         platosPedidosM4.forEach(element => {
             $("#CajaPlatosPedidos").prepend($('<option />', {
@@ -166,6 +192,16 @@ $("#slct1").on("change", function () {
                 value: element,
             }));
         });
+        if (cafeM4) {
+            $("#cbox1").prop("checked", true);
+        }else{
+            $("#cbox1").prop("checked", false);
+        }
+        if (copaM4) {
+            $("#cbox2").prop("checked", true);
+        }else{
+            $("#cbox2").prop("checked", false);
+        }
     } else {
         platosPedidosM5.forEach(element => {
             $("#CajaPlatosPedidos").prepend($('<option />', {
@@ -173,6 +209,16 @@ $("#slct1").on("change", function () {
                 value: element,
             }));
         });
+        if (cafeM5) {
+            $("#cbox1").prop("checked", true);
+        }else{
+            $("#cbox1").prop("checked", false);
+        }
+        if (copaM5) {
+            $("#cbox2").prop("checked", true);
+        }else{
+            $("#cbox2").prop("checked", false);
+        }
     }
 
 });
@@ -181,10 +227,19 @@ $("#slct1").on("change", function () {
 //Logica de almacenar los platos elegidos
 
 
-$("#CajaMenu").on('change', function () {
+$("#CajaMenu").dblclick(function () {
     var plato = $(this).val();
-    //Esta variable debe ser uno de los arrays anteriores
-    //Falta la logica de cambiar el array cuando se cambia la mesa
+    if (funcionMesa() == "Mesa1") {
+        platosPedidosM1.push(plato);
+    } else if (funcionMesa() == "Mesa2") {
+        platosPedidosM2.push(plato);
+    } else if (funcionMesa() == "Mesa3") {
+        platosPedidosM3.push(plato);
+    } else if (funcionMesa() == "Mesa4") {
+        platosPedidosM4.push(plato);
+    } else {
+        platosPedidosM5.push(plato);
+    }
     $("#CajaPlatosPedidos").prepend($('<option />', {
         text: plato,
         value: plato,
@@ -192,71 +247,103 @@ $("#CajaMenu").on('change', function () {
     actualizarPrecio(plato);
 });
 
+$("#cbox1").on('click', function () {
+    var cafe = false;
+    if ($('#cbox1').is(':checked')) {
+        cafe = true;
+        if (funcionMesa() == "Mesa1") {
+            cafeM1 = cafe;
+        } else if (funcionMesa() == "Mesa2") {
+            cafeM2 = cafe;
+        } else if (funcionMesa() == "Mesa3") {
+            cafeM3 = cafe;
+        } else if (funcionMesa() == "Mesa4") {
+            cafeM4 = cafe;
+        } else {
+            cafeM5 = cafe;
+        }
+    } else if (funcionMesa() == "Mesa1") {
+        cafeM1 = cafe;
+    } else if (funcionMesa() == "Mesa2") {
+        cafeM2 = cafe;
+    } else if (funcionMesa() == "Mesa3") {
+        cafeM3 = cafe;
+    } else if (funcionMesa() == "Mesa4") {
+        cafeM4 = cafe;
+    } else {
+        cafeM5 = cafe;
+    }
+});
+$("#cbox2").on('click', function () {
+    var copa = false;
+    if ($('#cbox2').is(':checked')) {
+        if (funcionMesa() == "Mesa1") {
+            copaM1 = copa;
+        } else if (funcionMesa() == "Mesa2") {
+            copaM2 = copa;
+        } else if (funcionMesa() == "Mesa3") {
+            copaM3 = copa;
+        } else if (funcionMesa() == "Mesa4") {
+            copaM4 = copa;
+        } else {
+            copaM5 = copa;
+        }
+    } else if (funcionMesa() == "Mesa1") {
+        copaM1 = copa;
+    } else if (funcionMesa() == "Mesa2") {
+        copaM2 = copa;
+    } else if (funcionMesa() == "Mesa3") {
+        copaM3 = copa;
+    } else if (funcionMesa() == "Mesa4") {
+        copaM4 = copa;
+    } else {
+        copaM5 = copa;
+    }
+});
+
+
 //-------------- CODIGO PROGRAMA -------------- ESTO ES LO QUE SE VA A EJECUTAR 
 
 inicializarArrayPlatos(platosPricipales);
 
 
 
-$("#cbox1").on('click', function () {
-    if ($('#cbox1').is(':checked')) {
-        alert('Seleccionado');
-    } else {
-        alert('a');
-    }
-});
-$("#cbox2").on('click', function () {
-    if ($('#cbox2').is(':checked')) {
-        alert('Seleccionado');
-    } else {
-        alert('a');
-    }
-});
+
 
 
 $("#botonPagar").on('click', function () {
-    document.getElementById("cajaPrecio").value = "€";
-});
-
-//-------------- CODIGO PROGRAMA -------------- ESTO ES LO QUE SE VA  A EJECUTAR ^^
-
-/*Loica de poner los precios
-var parar = false;
-var contador = 0;
-var precio = 0;
-
-platosPricipales.forEach(element => {
-    contador++;
-    if (plato == element) {
-        parar = true;
-        precio += preciosPlatosPricipales[contador];
+    if (funcionMesa() == "Mesa1") {
+        document.getElementById("cajaPrecio").value = CalcularPrecio(platosPedidosM1) + "€";
+        platosPedidosM1 = [];
+        $("#cbox1").prop("checked", false);
+        $("#CajaPlatosPedidos").empty();
+        $("#cbox2").prop("checked", false);
+    } else if (funcionMesa() == "Mesa2") {
+        document.getElementById("cajaPrecio").value = CalcularPrecio(platosPedidosM2) + "€";
+        platosPedidosM2 = [];
+        $("#cbox1").prop("checked", false);
+        $("#CajaPlatosPedidos").empty();
+        $("#cbox2").prop("checked", false);
+    } else if (funcionMesa() == "Mesa3") {
+        document.getElementById("cajaPrecio").value = CalcularPrecio(platosPedidosM3) + "€";
+        platosPedidosM3 = [];
+        $("#cbox1").prop("checked", false);
+        $("#CajaPlatosPedidos").empty();
+        $("#cbox2").prop("checked", false);
+    } else if (funcionMesa() == "Mesa4") {
+        document.getElementById("cajaPrecio").value = CalcularPrecio(platosPedidosM4) + "€";
+        platosPedidosM4 = [];
+        $("#CajaPlatosPedidos").empty();
+        $("#cbox1").prop("checked", false);
+        $("#cbox2").prop("checked", false);
+    } else {
+        document.getElementById("cajaPrecio").value = CalcularPrecio(platosPedidosM5) + "€";
+        platosPedidosM5 = [];
+        $("#CajaPlatosPedidos").empty();
+        $("#cbox1").prop("checked", false);
+        $("#cbox2").prop("checked", false);
+        
     }
 });
 
-contador = 0;
-if (parar == false) {
-    platosSegudos.forEach(element => {
-        contador++;
-        if (plato == element) {
-            parar = true;
-            precio += preciosPlatosSegudos[contador];
-        }
-    });
-} else if (parar == false) {
-    contador = 0;
-    platosPostres.forEach(element => {
-        contador++;
-        if (plato == element) {
-            parar = true;
-            precio += preciosPlatosPostres[contador];
-        }
-    });
-}
-
-
-//Nose pq no va esta mierda
-*/
-
-
-
-
+//-------------- CODIGO PROGRAMA -------------- ESTO ES LO QUE SE VA  A EJECUTAR ^^
