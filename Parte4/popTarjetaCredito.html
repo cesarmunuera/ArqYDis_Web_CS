@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PopPagar</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script src = "https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1 style="text-align: center;">PAGAR CUENTA</h1>
+    <br>
+    <form>
+        <label for="card-number">Número de Tarjeta</label>
+        <input type="num" id="card-number" class="input-cart-number" maxlength="4" />
+        <input type="num" id="card-number-1" class="input-cart-number" maxlength="4" />
+        <input type="num" id="card-number-2" class="input-cart-number" maxlength="4" />
+        <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" />
+        <br>
+        <br>
+        <label for="card-expiration-month">Fecha de Expiración</label>
+        <select id="card-expiration-month">
+            <option></option>
+            <option>01</option>
+            <option>02</option>
+            <option>03</option>
+            <option>04</option>
+            <option>05</option>
+            <option>06</option>
+            <option>07</option>
+            <option>08</option>
+            <option>09</option>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+        </select>
+        <select id="card-expiration-year">
+            <option></option>
+            <option>2016</option>
+            <option>2017</option>
+            <option>2018</option>
+            <option>2019</option>
+            <option>2020</option>
+            <option>2021</option>
+            <option>2022</option>
+            <option>2023</option>
+            <option>2024</option>
+            <option>2025</option>
+        </select>
+        <br>
+        <br>
+        <label for="card-ccv">CCV</label>
+        <input type="text" id="card-ccv" maxlength="3" />
+        <br>
+        <a href="index.html">
+        <br>
+        <input type=button id="botonConfirmaPago" value="Pagar" class="botonConfirmaPago">
+        </a>
+    </form>
+    <br>
+</body>
+
+</html>

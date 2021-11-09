@@ -342,7 +342,6 @@ $("#botonPagar").on('click', function () {
         $("#CajaPlatosPedidos").empty();
         $("#cbox1").prop("checked", false);
         $("#cbox2").prop("checked", false);
-        
     }
 });
 
