@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Documento</title>
+<style>
+#cajaimagen{
+	float: left;
+	width:300px;
+	margin:30px;
+	border:1px solid #F00;
+}
+
+#zonadestino{
+	float: left;
+	width:550px;
+	height: 400px;
+	margin:100px;
+	border: 1px solid #00F;
+}
+#imagen{
+	width:200px;
+	height:150px;
+}
+#imagen2{
+	width:200px;
+	height:150px;
+}
+#imagen3{
+	width:200px;
+	height:150px;
+}
+#imagen4{
+	width:200px;
+	height:150px;
+}
+</style>
+
+<script>
+
+	var elem_origen;
+	var elem_destino;
+	
+	function comenzar(){
+	
+		var imagenes=document.querySelectorAll("#cajaimagen img");
+		
+		for(var i=0;i<imagenes.length;i++){
+		
+			imagenes[i].addEventListener("dragstart",comenzando_arrastrar,false);
+			
+		}
+		
+		 elem_destino=document.getElementById("zonadestino"); //identificar la zona de destino
+		 elem_destino.addEventListener("dragenter",entrando,false);
+		 elem_destino.addEventListener("dragover",function(e){e.preventDefault();},false);
+		 elem_destino.addEventListener("drop",soltado,false);
+		 elem_destino.addEventListener("dragleave",saliendo,false);
+	
+	}
+	
+	function comenzando_arrastrar(e){
+	
+		var elemento=e.target; //identificar objeto que desencadeno el evento
+		e.dataTransfer.setData("Text",elemento.getAttribute("id"));
+	}
+	
+	function soltado(e){
+		
+		e.preventDefault();
+		var id=e.dataTransfer.getData("Text");
+		var src=document.getElementById(id).src;
+		
+		elem_destino.innerHTML="<img src='"+src+"'>";
+		
+	}
+	
+	function entrando(e){
+	
+		e.preventDefault();
+		
+		elem_destino.style.background="rgba(8,252,25,.8)";
+		
+	}
+	
+	function saliendo(e){
+	
+		e.preventDefault();
+		elem_destino.style.background="#FFFFFF";
+		
+	}
+	window.addEventListener("load", comenzar, false);
+	
+</script>
+</head>
+<body>
+<h1>Pagina simple que aplica el funcionamiento drag & drop </h1>
+<section id="zonadestino">
+Arrastre las imagenes hasta aqui
+</section>
+<section id="cajaimagen">
+<img alt="nueva imagen" src="imagen.jfif" height="150" width="100" id="imagen">
+<img alt="nueva imagen" src="imagen2.jpg" height="150" width="100" id="imagen2">
+<img alt="nueva imagen" src="imagen3.jpg" height="150" width="100" id="imagen3">
+<img alt="nueva imagen" src="imagen4.jpg" height="150" width="100" id="imagen4">
+</section>
+
+</body>
+</html>

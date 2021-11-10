@@ -1,0 +1,17 @@
+#Manifiesto v1.0
+#Autor:quiensea
+
+CACHE MANIFEST
+index.html
+main.js
+estilo.css
+
+
+NETWORK
+
+popTarjetaCredito.html
+
+
+FALLBACK
+
+popTarjetaCredito.html

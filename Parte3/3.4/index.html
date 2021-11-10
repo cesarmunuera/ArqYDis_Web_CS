@@ -1,0 +1,61 @@
+<!doctype html>
+<html manifest="manifiesto.manifest">
+<head>
+<title>documento para trabajar offline</title>
+<style>
+#zonadatos{
+
+	width:800px;
+	height:800px;
+	margin:15px;
+	padding:15px;
+	border:2px dotted #FF0000;
+	text-align: center;
+
+}
+</style>
+
+<script>
+function comenzar(){
+
+	var cache= window.applicationCache;
+	cache.addEventListener("error",errores),false;
+	
+}
+
+function errores(){
+
+	alert("No se puede descargar");
+
+}
+window.addEventListener("load",comenzar,false);
+
+</script>
+
+</head>
+
+<body>
+	
+	<section id="zonadatos">
+		Estamos trabajando sin conexión
+		<h1>Contenido a editar</h1>
+		<section id="editable" contenteditable="true">
+	<h2>Lista de compras</h2>
+	<p> lista de mañana</p>
+		<ul>
+			<li>Manzanas</li>
+			<li>Naranjas</li>
+			<li>Platanos</li>
+			<li>Peras</li>
+			<li>Sandías</li>
+		
+		</ul>
+
+</section>
+	</section>
+	
+
+
+</body>
+
+</html>
