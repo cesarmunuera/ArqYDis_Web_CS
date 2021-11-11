@@ -12,10 +12,8 @@
 
 <body>
     <br>
-    <div>
-        <h1 style="text-align: left;">RESTAURANTE</h1>
-        <img src="Chicote.jpeg" class="selecionImagen" />
-    </div>
+    <h1 style="text-align: left;">RESTAURANTE</h1>
+    
     <br>
     <!-- ESTOS SON LOS RADIOS -->
     <div>
@@ -34,7 +32,6 @@
 
     <!-- ESTO ES EL SELECTOR DE MESA -->
     <select id="slct1" name="slct1" class="selecionableMesa">
-        <!--onchange="populate(this.id,'slct2')"-->
         <option value="Mesa1">Mesa 1</option>
         <option value="Mesa2">Mesa 2</option>
         <option value="Mesa3">Mesa 3</option>
@@ -49,12 +46,12 @@
     </select>
 
     <select id="CajaPlatosPedidos" name="CajaPlatosPedidos" class="cajaMenus" multiple>
-        <!--<option value="2" label="Opcion 2"> Opcion 2 </option>
-        <option value="3" label="Opcion 3"> Opcion 3</option>
-        esto es lo que habria que poner dentro de la funcion de JS con un bucle for y la lista de alimentos-->
     </select>
 
+    <img src="Chicote.jpeg" style="vertical-align: top; width: 400px;" />
+
     <br>
+    
     <form class="claseIzq">
         <br>
         <input type="checkbox" id="cbox1" value="cafe_checkbox"> Con caf&eacute;<br>
