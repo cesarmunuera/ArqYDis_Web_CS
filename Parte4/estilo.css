@@ -8,12 +8,29 @@
     border-radius: 10px;
 }
 
+.selecionImagen {
+    font-family: "Consolas", monospace;
+    font-size: medium;
+    position: relative;
+    left: 800px;
+    bottom: 0px;
+}
+
 .selecionableMesa {
     font-family: "Consolas", monospace;
     font-size: medium;
     position: relative;
     left: 200px;
     bottom: 45px;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    background-color: #4d4d4b;
+}
+
+.selecionableFecha {
+    font-family: "Consolas", monospace;
+    font-size: medium;
+    position: relative;
     border-radius: 10px;
     color: rgb(255, 255, 255);
     background-color: #4d4d4b;

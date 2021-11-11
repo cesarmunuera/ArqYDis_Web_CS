@@ -11,18 +11,18 @@
 </head>
 
 <body>
-    <h1 style="text-align: center;">PAGAR CUENTA</h1>
+    <h1 style="text-align: left;">PAGAR CUENTA</h1>
     <br>
     <form>
         <label for="card-number">Número de Tarjeta</label>
-        <input type="num" id="card-number" class="input-cart-number" maxlength="4" />
-        <input type="num" id="card-number-1" class="input-cart-number" maxlength="4" />
-        <input type="num" id="card-number-2" class="input-cart-number" maxlength="4" />
-        <input type="num" id="card-number-3" class="input-cart-number" maxlength="4" />
+        <input type="num" id="card-number" class="cajaPrecio" maxlength="4" />
+        <input type="num" id="card-number-1" class="cajaPrecio" maxlength="4" />
+        <input type="num" id="card-number-2" class="cajaPrecio" maxlength="4" />
+        <input type="num" id="card-number-3" class="cajaPrecio" maxlength="4" />
         <br>
         <br>
         <label for="card-expiration-month">Fecha de Expiración</label>
-        <select id="card-expiration-month">
+        <select id="card-expiration-month" class="selecionableFecha">
             <option></option>
             <option>01</option>
             <option>02</option>
@@ -37,7 +37,7 @@
             <option>11</option>
             <option>12</option>
         </select>
-        <select id="card-expiration-year">
+        <select id="card-expiration-year" class="selecionableFecha">
             <option></option>
             <option>2016</option>
             <option>2017</option>
@@ -53,11 +53,11 @@
         <br>
         <br>
         <label for="card-ccv">CCV</label>
-        <input type="text" id="card-ccv" maxlength="3" />
+        <input type="text" id="card-ccv" maxlength="3" class="cajaPrecio" />
         <br>
         <a href="index.html">
         <br>
-        <input type=button id="botonConfirmaPago" value="Pagar" class="botonConfirmaPago">
+        <input type=button id="botonConfirmaPago" value="Pagar" class="botonPagar">
         </a>
     </form>
     <br>
