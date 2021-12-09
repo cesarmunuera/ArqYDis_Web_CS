@@ -32,33 +32,38 @@
 
         rsCoches = sCoches.executeQuery("SELECT NOMBRE FROM COCHES");
         rsCircuitos = sCircuitos.executeQuery("SELECT NOMBRE FROM CIRCUITOS");
-
-        rsmdCoches = rsCoches.getMetaData();
-        rsmdCircuitos = rsCircuitos.getMetaData();
     %>
 
-    <table>
-        <tr>
-            <td>
-                <h2>Configuraci&oacute;n del circuito</h2>
-                <select id="CajaCircuitos" name="CajaCircuitos" multiple>
-                    
-                    <option>prueba1</option>
-                    
-                </select>
-            </td>
+    <form action="/PL6JAVA/ServletBBDD" method="POST">
+        <table>
+            <tr>
+                <td>
+                    <h2>Configuraci&oacute;n del circuito</h2>
+                    <select id="CajaCircuitos" name="CajaCircuitos" multiple>
+                        <% while (rsCircuitos.next()) {%>
+                        <option value="<%= rsCircuitos.getString(1)%>" name="circuito">
+                            <%= rsCircuitos.getString(1)%>
+                        </option>
+                        <% }%>
+                    </select>
+                </td>
 
 
-            <td>
-                <h2>Configuraci&oacute;n del coche</h2>
-                <select id="CajaCoches" name="CajaCoches"multiple>
-                    
-                    <option>prueba2</option>
-                    
-                </select>
-            </td>
-        </tr>
-    </table>
+                <td>
+                    <h2>Configuraci&oacute;n del coche</h2>
+                    <select id="CajaCoches" name="CajaCoches" multiple>
+                        <% while (rsCoches.next()) {%>
+                        <option value="<%= rsCoches.getString(1)%>" name="coche">
+                            <%= rsCoches.getString(1)%>
+                        </option>
+                        <% }%>
+                    </select>
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" id="botonEnviar" value="Calcular KERS">
+    </form>
 
 </body>
 

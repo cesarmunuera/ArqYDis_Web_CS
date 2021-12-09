@@ -42,7 +42,7 @@
             <% while (rs.next()) { %>
             <tr>
                 <% for (int i = 1; i <= rsmd.getColumnCount(); i++) { %>
-                <td><%= rs.getString(i)%></td>
+                <td><%= rs.getString(i) %></td>
                 <%} %>
             </tr>
             <% }%>

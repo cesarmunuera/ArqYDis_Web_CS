@@ -1,4 +1,5 @@
 com\mycompany\pl6java\JAXRSConfiguration.class
+ServletBBDD.class
 ModelosDatos.class
 com\mycompany\pl6java\resources\JavaEE8Resource.class
 Servlet.class
