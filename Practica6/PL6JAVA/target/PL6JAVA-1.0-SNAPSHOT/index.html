@@ -17,7 +17,7 @@
 </head>
 
 <body>
-    <form action="/Servlet" method="POST">
+    <form action="/PL6JAVA/Servlet" method="POST">
         <br>
         <br>
         <br>
@@ -31,7 +31,7 @@
                 </td>
             </tr>
         </table>
-
+        
 
         <table>
             <tr class="cajasConfiguracion">
@@ -55,22 +55,23 @@
                     <label>N&uacute;mero de curvas</label>
                 </td>
                 <td>
-                    <input type="text" id="nombre_circuito" />
+                    
+                    <input type="text" name="nombre_circuito" /> 
                     <br>
                     <br>
-                    <input type="text" id="ciudad" />
+                    <input type="text" name="ciudad" />
                     <br>
                     <br>
-                    <input type="text" id="pais" />
+                    <input type="text" name="pais" />
                     <br>
                     <br>
-                    <input type="num" id="num_vueltas" />
+                    <input type="num" name="num_vueltas" />
                     <br>
                     <br>
-                    <input type="num" id="longitud" />
+                    <input type="num" name="longitud" />
                     <br>
                     <br>
-                    <input type="num" id="num_curvas" />
+                    <input type="num" name="num_curvas" />
                 </td>
                 <td class="cajasConfiguracion">
                     <label>Nombre del coche</label>
@@ -79,19 +80,21 @@
                     <label>Ganancia de potencia</label>
                 </td>
                 <td class="cajasConfiguracion">
-                    <input type="text" id="nombre_coche" />
+                    <input type="text" name="nombre_coche" />
                     <br>
                     <br>
-                    <input type="text" id="ganancia" />
+                    <input type="text" name="ganancia" />
 
                 </td>
 
             </tr>
-        </table>
+        </table> 
 
         <br>
         <br>
         <br>
+       
+        
 
         <input type="submit" id="boton" value="Enviar informacion" class="boton">
         <input type="reset" name="B2" value="Reset">

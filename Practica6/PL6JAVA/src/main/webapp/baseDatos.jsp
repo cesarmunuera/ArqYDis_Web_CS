@@ -38,23 +38,23 @@
     %>
 
     <table>
-        <tr class="cajasConfiguracion">
+        <tr>
             <td>
                 <h2>Configuraci&oacute;n del circuito</h2>
                 <select id="CajaCircuitos" name="CajaCircuitos" multiple>
-                    <% for (int i = 1; i <= rsmdCircuitos.getColumnCount(); i++) {%>
-                    <option><%= rsCircuitos.getString(i)%></option>
-                    <%}%>
+                    
+                    <option>prueba1</option>
+                    
                 </select>
             </td>
 
 
-            <td class="cajaTitulo">
+            <td>
                 <h2>Configuraci&oacute;n del coche</h2>
                 <select id="CajaCoches" name="CajaCoches"multiple>
-                    <% for (int i = 1; i <= rsmdCoches.getColumnCount(); i++) {%>
-                    <option><%= rsCoches.getString(i)%></option>
-                    <%}%>
+                    
+                    <option>prueba2</option>
+                    
                 </select>
             </td>
         </tr>
