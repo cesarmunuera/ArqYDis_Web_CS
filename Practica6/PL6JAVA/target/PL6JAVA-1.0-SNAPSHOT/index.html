@@ -56,22 +56,22 @@
                 </td>
                 <td>
                     
-                    <input type="text" name="nombre_circuito" /> 
+                    <input type="text" name="nombre_circuito" required minlength="1" /> 
                     <br>
                     <br>
-                    <input type="text" name="ciudad" />
+                    <input type="text" name="ciudad" required minlength="1" />
                     <br>
                     <br>
-                    <input type="text" name="pais" />
+                    <input type="text" name="pais" required minlength="1" />
                     <br>
                     <br>
-                    <input type="num" name="num_vueltas" />
+                    <input type="number" name="num_vueltas" required minlength="1" min="40" max="80" />
                     <br>
                     <br>
-                    <input type="num" name="longitud" />
+                    <input type="number" name="longitud" required minlength="1" min="3000" max="9000" />
                     <br>
                     <br>
-                    <input type="num" name="num_curvas" />
+                    <input type="number" name="num_curvas" required minlength="1" min="6" max="20" />
                 </td>
                 <td class="cajasConfiguracion">
                     <label>Nombre del coche</label>
@@ -80,10 +80,10 @@
                     <label>Ganancia de potencia</label>
                 </td>
                 <td class="cajasConfiguracion">
-                    <input type="text" name="nombre_coche" />
+                    <input type="text" name="nombre_coche" required minlength="1" />
                     <br>
                     <br>
-                    <input type="text" name="ganancia" />
+                    <input type="number" name="ganancia" required minlength="1" min="4.0" max="10.0" />
 
                 </td>
 

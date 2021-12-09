@@ -11,8 +11,8 @@ public class ServletBBDD extends HttpServlet {
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         HttpSession s = req.getSession(true);
 
-        String nombreCoche = (String) req.getParameter("CajaCircuitos");
-        String nombreCircuito = (String) req.getParameter("CajaCoches");
+        String nombreCircuito = (String) req.getParameter("CajaCircuitos");
+        String nombreCoche= (String) req.getParameter("CajaCoches");
 
         s.setAttribute("nombreCircuito", nombreCircuito);
         s.setAttribute("nombreCoche", nombreCoche);
