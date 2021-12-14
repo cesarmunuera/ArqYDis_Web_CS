@@ -18,7 +18,6 @@
     %>
 
     <label>Para el veh&iacute;culo <%=nombreCoche%>, y el circuito <%=nombreCircuito%>, el KERS calculado es: </label>
-    <input type="text" id="cajaPrecio" value="" readonly onmousedown="return false;" />
 
     <%@ page import="java.sql.*" %>
     <%!
@@ -27,6 +26,8 @@
         Statement sCircuitos;
         ResultSet rsCoches;
         ResultSet rsCircuitos;
+        float ganancia;
+        int num_vueltas, num_curvas;
     %>
     <%
         c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
@@ -37,10 +38,24 @@
         rsCoches = sCoches.executeQuery("SELECT GANANCIA FROM COCHES WHERE NOMBRE='" + nombreCoche + "'");
         rsCircuitos = sCircuitos.executeQuery("SELECT NUMERO_VUELTAS, NUMERO_CURVAS FROM CIRCUITOS WHERE NOMBRE='" + nombreCircuito + "'");
 
-        System.out.println(rsCoches.getString(1));
-        System.out.println(rsCircuitos.getString(1));
-        //System.out.println(rsCircuitos.getString(2));
-%>
+    %>
+
+    <%while (rsCoches.next()) {%>
+    Ganancia:
+    <%= ganancia = Float.parseFloat(rsCoches.getString(1))%>
+    <%}%>
+
+    <%while (rsCircuitos.next()) {%>
+    * Numero de vueltas: 
+    <%=num_vueltas = Integer.parseInt(rsCircuitos.getString(1))%>
+    * Numero de curvas: 
+    <%=num_curvas = Integer.parseInt(rsCircuitos.getString(2))%>
+    <%}%>
+    = 
+    <input type="text" id="cajaPrecio" value="<%=ganancia * num_vueltas * num_curvas%>" readonly onmousedown="return false;" />
+
+
+    <a href="index.html" class="boton"><button>Volver a inicio</button></a>
 
 </body>
 </html>
