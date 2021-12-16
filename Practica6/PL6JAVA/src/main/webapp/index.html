@@ -4,106 +4,108 @@
     <head>
 
         <title>Men&uacute; configuraci&oacute;n</title>
-    <h1>
-        <center>Men&uacute; configuraci&oacute;n</center>
-    </h1>
+        <!--Esto es el link a la libreria JQuery-->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-    <!--Esto es el link a la libreria JQuery-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <link rel="stylesheet" type="text/css" href="estilo.css">
+        <link rel="stylesheet" type="text/css" href="estilo.css">
 
 
-</head>
+    </head>
 
-<body>
-    <form action="/PL6JAVA/Servlet" method="POST">
+    <body>
+        <h1>
+            <center>Men&uacute; configuraci&oacute;n</center>
+        </h1>
+        <form action="/PL6JAVA/Servlet" method="POST">
+            <br>
+            <br>
+            <br>
+            <table>
+                <tr class="cajasConfiguracion">
+                    <td>
+                        <h2>Configuraci&oacute;n del circuito</h2>
+                    </td>
+                    <td class="cajaTitulo">
+                        <h2>Configuraci&oacute;n del coche</h2>
+                    </td>
+                </tr>
+            </table>
+
+
+            <table>
+                <tr class="cajasConfiguracion">
+                    <td>
+                        <!-- Elementos del circuito -->
+                        <label>Nombre del circuito</label>
+                        <br>
+                        <br>
+                        <label>Ciudad</label>
+                        <br>
+                        <br>
+                        <label>Pa&iacute;s</label>
+                        <br>
+                        <br>
+                        <label>N&uacute;mero de vuletas</label>
+                        <br>
+                        <br>
+                        <label>Longitud de vueltas</label>
+                        <br>
+                        <br>
+                        <label>N&uacute;mero de curvas</label>
+                    </td>
+                    <td>
+
+                        <input type="text" name="nombre_circuito" required minlength="1" /> 
+                        <br>
+                        <br>
+                        <input type="text" name="ciudad" required minlength="1" />
+                        <br>
+                        <br>
+                        <input type="text" name="pais" required minlength="1" />
+                        <br>
+                        <br>
+                        <input type="number" name="num_vueltas" required minlength="1" min="40" max="80" />
+                        <br>
+                        <br>
+                        <input type="number" name="longitud" required minlength="1" min="3000" max="9000" />
+                        <br>
+                        <br>
+                        <input type="number" name="num_curvas" required minlength="1" min="6" max="20" />
+                    </td>
+                    <td class="cajasConfiguracion">
+                        <label>Nombre del coche</label>
+                        <br>
+                        <br>
+                        <label>Ganancia de potencia</label>
+                    </td>
+                    <td class="cajasConfiguracion">
+                        <input type="text" name="nombre_coche" required minlength="1" />
+                        <br>
+                        <br>
+                        <input type="number" name="ganancia" required minlength="1" min="4.0" max="10.0" />
+
+                    </td>
+
+                </tr>
+            </table> 
+
+            <br>
+            <br>
+            <br>
+
+            <input type="submit" id="boton" value="Enviar informacion" class="boton">
+            
+            <br>
+            <br>
+            <input type="reset" name="B2" value="Reset" class="botonReset">
+            
+            <br>
+            
+        </form>
         <br>
-        <br>
-        <br>
-        <table>
-            <tr class="cajasConfiguracion">
-                <td>
-                    <h2>Configuraci&oacute;n del circuito</h2>
-                </td>
-                <td class="cajaTitulo">
-                    <h2>Configuraci&oacute;n del coche</h2>
-                </td>
-            </tr>
-        </table>
-        
+        <a href="baseDatos.jsp" class="boton"><button>Mirar base de datos</button></a>
 
-        <table>
-            <tr class="cajasConfiguracion">
-                <td>
-                    <!-- Elementos del circuito -->
-                    <label>Nombre del circuito</label>
-                    <br>
-                    <br>
-                    <label>Ciudad</label>
-                    <br>
-                    <br>
-                    <label>Pa&iacute;s</label>
-                    <br>
-                    <br>
-                    <label>N&uacute;mero de vuletas</label>
-                    <br>
-                    <br>
-                    <label>Longitud de vueltas</label>
-                    <br>
-                    <br>
-                    <label>N&uacute;mero de curvas</label>
-                </td>
-                <td>
-                    
-                    <input type="text" name="nombre_circuito" required minlength="1" /> 
-                    <br>
-                    <br>
-                    <input type="text" name="ciudad" required minlength="1" />
-                    <br>
-                    <br>
-                    <input type="text" name="pais" required minlength="1" />
-                    <br>
-                    <br>
-                    <input type="number" name="num_vueltas" required minlength="1" min="40" max="80" />
-                    <br>
-                    <br>
-                    <input type="number" name="longitud" required minlength="1" min="3000" max="9000" />
-                    <br>
-                    <br>
-                    <input type="number" name="num_curvas" required minlength="1" min="6" max="20" />
-                </td>
-                <td class="cajasConfiguracion">
-                    <label>Nombre del coche</label>
-                    <br>
-                    <br>
-                    <label>Ganancia de potencia</label>
-                </td>
-                <td class="cajasConfiguracion">
-                    <input type="text" name="nombre_coche" required minlength="1" />
-                    <br>
-                    <br>
-                    <input type="number" name="ganancia" required minlength="1" min="4.0" max="10.0" />
-
-                </td>
-
-            </tr>
-        </table> 
-
-        <br>
-        <br>
-        <br>
-       
-        
-
-        <input type="submit" id="boton" value="Enviar informacion" class="boton">
-        <input type="reset" name="B2" value="Reset">
-    </form>
-    <br>
-    <br>
-    <a href="baseDatos.jsp" class="boton"><button>Mirar base de datos</button></a>
-
-    <script src = "main.js"></script>
-</body>
+        <script src = "main.js"></script>
+    </body>
 
 </html>

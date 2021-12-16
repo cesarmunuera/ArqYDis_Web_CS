@@ -1,14 +1,21 @@
 .cajasConfiguracion{
     position: relative;
-    left: 300; 
+    left: 300px; 
 }
 
 .boton{
     position: relative;
-    left: 700; 
+    left: 700px; 
+}
+
+.botonReset{
+    position: relative;
+    left: 745px; 
 }
 
 .cajaTitulo{
     position: relative;
-    left: 350; 
+    left: 350px; 
 }
+
+
