@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es" manifest="mimanifest.manifest">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel administrador</title>
+    <link rel="stylesheet" href="estilo.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>
+        <center>Generador de vuelos</center>
+    </h1>
+
+    <br>
+    <br>
+    <br>
+
+    <table>
+        <tr class="inicioAdmin">
+            <td>    
+                <label>Origen</label>
+                <br>
+                <br>
+                <label>Destino</label>
+                <br>
+                <br>
+                <label>Ida y vuelta</label>
+                <br>
+                <br>
+                <label>Fecha</label>
+                <br>
+                <br>
+                <label>N&uacute;mero de viajeros</label>
+                <br>
+                <br>
+                <label>Precio</label>
+            </td>
+            <td>
+                <input type="text" id="origen"/>
+                <br>
+                <br>
+                <input type="text" id="destino"/>
+                <br>
+                <br>
+                <input type="checkbox" id="cbox1">
+                <br>
+                <br>
+                <input type="date" name="fecha">
+                <br>
+                <br>
+                <input type="num" id="num_viajeros"/>
+                <br>
+                <br>
+                <input type="num" id="precio"/>
+            </td>
+        </tr>
+    </table>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <input type="button" id="Generar Vuelo" value="Generar Vuelo" class="botonesGenerarVuelo">
+
+    <br>
+    <br>
+    <br>
+
+    <a href="estadisticas.jsp" class="botonesGenerarVuelo"><button>Mirar estadist&iacute;cas</button></a>
+
+
+</body>
+
+</html>
