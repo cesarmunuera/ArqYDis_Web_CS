@@ -16,6 +16,7 @@ public class Servlet extends HttpServlet {
         String user = (String) req.getParameter("user");
         String password = (String) req.getParameter("password");
         
+        
        if (bd.existeUsuario(user)){
            if(bd.comprobarPassword(user, password)){
                if (bd.tipoUsuario(user)){

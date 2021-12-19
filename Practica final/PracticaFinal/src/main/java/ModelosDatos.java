@@ -19,19 +19,16 @@ public class ModelosDatos {
         }
     }
 
-
-    
-    
     public boolean existeUsuario(String user) {
         boolean existe = false;
         String cad;
         try {
             set = con.createStatement();
-            rs = set.executeQuery("SELECT * FROM COCHES");
+            rs = set.executeQuery("SELECT * FROM USUARIOS");
             while (rs.next()) {
                 cad = rs.getString("NOMBRE");
                 cad = cad.trim();
-                if (cad.compareTo(nombre.trim()) == 0) {
+                if (cad.compareTo(user.trim()) == 0) {
                     existe = true;
                 }
             }
@@ -45,20 +42,47 @@ public class ModelosDatos {
 
     public boolean comprobarPassword(String user, String password) {
         boolean correcta = false;
+        String cad;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT PASSWORD FROM USUARIOS WHERE USUARIO='" + user + "'");
+            while (rs.next()) {
+                cad = rs.getString("PASSWORD");
+                cad = cad.trim();
+                if (cad.compareTo(password.trim()) == 0) {
+                    correcta = true;
+                }
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println("No lee de la tabla");
+        }
         return (correcta);
     }
 
-    public boolean tipoUsuario(String nombre) {
+    public boolean tipoUsuario(String user) {
         boolean Admin = false;
+        boolean cad;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT TIPO FROM USUARIOS WHERE NOMBRE='" + user + "'");
+            
+            while (rs.next()) {
+                cad = rs.getString("TIPO");
+                cad = cad.trim();
+                if (cad.compareTo(user.trim()) == 0) {
+                    existe = true;
+                }
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println("No lee de la tabla");
+        }
         return (Admin);
     }
 
-    
-    
-    
-    
-    
-    
     public void cerrarConexion() {
         try {
             con.close();
