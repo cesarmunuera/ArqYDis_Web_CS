@@ -1,0 +1,60 @@
+/* ------------------- index.html -------------------*/
+
+.inicio{
+    position: relative;
+    left: 650px;
+}
+
+.botonEnviar{
+    position: relative;
+    left: 80px;
+}
+
+/* ------------------- admin.html -------------------*/
+
+.inicioAdmin{
+    position: relative;
+    left: 650px;
+}
+
+.botonesGenerarVuelo{
+    position: relative;
+    left: 700px;
+}
+
+/* ------------------- cliente.html -------------------*/
+
+.espacioColumnas{
+    position: relative;
+    left: 300px;
+}
+
+.espacioColumnas1{
+    position: relative;
+    left: 100px;
+}
+
+.espacioColumnas2{
+    position: relative;
+    left: 200px;
+}
+
+.espacioColumnas3{
+    position: relative;
+    left: 300px;
+}
+
+.espacioColumnas4{
+    position: relative;
+    left: 400px;
+}
+
+.espacioColumnas5{
+    position: relative;
+    left: 500px;
+}
+
+.botonPagar{
+    position: relative;
+    left: 725px;
+}

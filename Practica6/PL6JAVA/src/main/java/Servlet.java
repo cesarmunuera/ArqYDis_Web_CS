@@ -15,7 +15,7 @@ public class Servlet extends HttpServlet {
     // AQUI CODIGO
     public void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         // OBTENEMOS LOS PARAMETROS ENVIADOS DEL POST DEL HTML
-        String nombre_circuito = req.getParameter("nombre_circuito");
+        String nombre_circuito = (String) req.getParameter("nombre_circuito");
         String ciudad = (String) req.getParameter("ciudad");
         String pais = (String) req.getParameter("pais");
         int num_vueltas = Integer.parseInt(req.getParameter("num_vueltas"));
