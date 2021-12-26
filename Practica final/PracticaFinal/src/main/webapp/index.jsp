@@ -44,15 +44,21 @@
             private ModelosDatos bd;
 
             public void init(ServletConfig cfg) throws ServletException {
-                bd = new ModelosDatos();
-                bd.abrirConexion();
+                try {
+                    bd = new ModelosDatos();
+                    bd.abrirConexion();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         %>
         <%
-                String user = (String) request.getParameter("user");
-                String password = (String) request.getParameter("password");
+            String user = (String) request.getParameter("user");
+            String password = (String) request.getParameter("password");
+            System.out.println(user);
+            System.out.println(password);
 
-                if (bd.existeUsuario(user)) {
+            if (bd.existeUsuario(user)) {
                     if (bd.comprobarPassword(user, password)) {
                         if (bd.tipoUsuario(user)) {
                             //El usuario existe y su contraseña es correcta, es un administrador
@@ -70,7 +76,7 @@
             }
         %>
         <%!
-            public void destroy() {
+             public void destroy() {
                 bd.cerrarConexion();
                 super.destroy();
             }

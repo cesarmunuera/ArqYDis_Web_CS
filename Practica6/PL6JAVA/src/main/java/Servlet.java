@@ -26,16 +26,17 @@ public class Servlet extends HttpServlet {
         System.out.println(ganancia);
         // COMPROBAMOS SI EXISTE EL COCHE
         if (bd.existeCoche(nombre_coche)) {
-            System.out.println("Ya existe un coche con ese nombre");
+            //System.out.println("Ya existe un coche con ese nombre");
+            res.getWriter().write("Ya existe un coche con ese nombre");
         } else {
-            bd.insertarCoche(nombre_coche,ganancia);
+            bd.insertarCoche(nombre_coche, ganancia);
         }
 
         // COMPROBAMOS SI EXISTE EL CIRCUITO
         if (bd.existeCircuito(nombre_circuito)) {
             System.out.println("Ya existe un circuito con ese nombre");
         } else {
-            bd.insertarCircuito(nombre_circuito,ciudad,pais,num_vueltas,longitud,num_curvas);
+            bd.insertarCircuito(nombre_circuito, ciudad, pais, num_vueltas, longitud, num_curvas);
         }
 
         res.sendRedirect(res.encodeRedirectURL("/PL6JAVA/index.html"));

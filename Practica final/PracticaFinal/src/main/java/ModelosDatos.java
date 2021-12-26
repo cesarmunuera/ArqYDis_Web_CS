@@ -62,25 +62,20 @@ public class ModelosDatos {
     }
 
     public boolean tipoUsuario(String user) {
-        boolean Admin = false;
-        boolean cad;
+        boolean cad = false;
         try {
             set = con.createStatement();
             rs = set.executeQuery("SELECT TIPO FROM USUARIOS WHERE NOMBRE='" + user + "'");
-            
+
             while (rs.next()) {
-                cad = rs.getString("TIPO");
-                cad = cad.trim();
-                if (cad.compareTo(user.trim()) == 0) {
-                    existe = true;
-                }
+                cad = rs.getBoolean("TIPO");
             }
             rs.close();
             set.close();
         } catch (Exception e) {
             System.out.println("No lee de la tabla");
         }
-        return (Admin);
+        return (cad);
     }
 
     public void cerrarConexion() {
