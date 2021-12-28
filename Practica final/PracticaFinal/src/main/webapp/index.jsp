@@ -40,27 +40,112 @@
         </form>
 
 
+        <%@ page import="java.util.*"%>
+        <%@ page import="java.sql.*"%>
+        
         <%!
-            private ModelosDatos bd;
+            public void abrirConexion() {
+        String sURL = "jdbc:odbc:mvc";
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
+            System.out.println("Se ha conectado----------------------------------------------------------------------------------------------------------------------------------------");
+        } catch (Exception e) {
+            System.out.println("No se ha conectado");
+        }
+    }
+        
+public boolean existeUsuario(String user) {
+        boolean existe = false;
+        String cad;
+        try {
+            System.out.println("------------------CONTROL1----------");
+            set = con.createStatement();
+            System.out.println("------------------CONTROL2----------");
+            rs = set.executeQuery("SELECT * FROM USUARIOS");
+            while (rs.next()) {
+                cad = rs.getString("NOMBRE");
+                System.out.println("------------------"+cad);
+                cad = cad.trim();
+                if (cad.compareTo(user.trim()) == 0) {
+                    existe = true;
+                }
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println("No lee de la tabla");
+            System.out.println(e);
+        }
+        return (existe);
+    }
+public boolean comprobarPassword(String user, String password) {
+        boolean correcta = false;
+        String cad;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT PASSWORD FROM USUARIOS WHERE USUARIO='" + user + "'");
+            while (rs.next()) {
+                cad = rs.getString("PASSWORD");
+                cad = cad.trim();
+                if (cad.compareTo(password.trim()) == 0) {
+                    correcta = true;
+                }
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println("No lee de la tabla");
+        }
+        return (correcta);
+    }
+public boolean tipoUsuario(String user) {
+        boolean cad = false;
+        try {
+            set = con.createStatement();
+            rs = set.executeQuery("SELECT TIPO FROM USUARIOS WHERE NOMBRE='" + user + "'");
 
-            public void init(ServletConfig cfg) throws ServletException {
+            while (rs.next()) {
+                cad = rs.getBoolean("TIPO");
+            }
+            rs.close();
+            set.close();
+        } catch (Exception e) {
+            System.out.println("No lee de la tabla");
+        }
+        return (cad);
+    }
+
+    public void cerrarConexion() {
+        try {
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+             
+            public void iniciar(ServletConfig cfg) throws ServletException {
                 try {
-                    bd = new ModelosDatos();
-                    bd.abrirConexion();
+                    abrirConexion();
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
+
+        private Connection con;
+    private Statement set;
+    private ResultSet rs;
         %>
+
         <%
             String user = (String) request.getParameter("user");
             String password = (String) request.getParameter("password");
             System.out.println(user);
             System.out.println(password);
-
-            if (bd.existeUsuario(user)) {
-                    if (bd.comprobarPassword(user, password)) {
-                        if (bd.tipoUsuario(user)) {
+            
+            if (existeUsuario(user)) {
+                    if (comprobarPassword(user, password)) {
+                        if (tipoUsuario(user)) {
                             //El usuario existe y su contraseña es correcta, es un administrador
                             response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.html"));
                         } else {
@@ -73,14 +158,9 @@
                 } else {
                     System.out.println("El usuario no existe");
                 }
-            }
+            
         %>
-        <%!
-             public void destroy() {
-                bd.cerrarConexion();
-                super.destroy();
-            }
-        %>
+        
 
 
     </body>
