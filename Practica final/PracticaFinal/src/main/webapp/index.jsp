@@ -42,125 +42,108 @@
 
         <%@ page import="java.util.*"%>
         <%@ page import="java.sql.*"%>
-        
+
         <%!
-            public void abrirConexion() {
-        String sURL = "jdbc:odbc:mvc";
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
-            System.out.println("Se ha conectado----------------------------------------------------------------------------------------------------------------------------------------");
-        } catch (Exception e) {
-            System.out.println("No se ha conectado");
-        }
-    }
-        
-public boolean existeUsuario(String user) {
-        boolean existe = false;
-        String cad;
-        try {
-            System.out.println("------------------CONTROL1----------");
-            set = con.createStatement();
-            System.out.println("------------------CONTROL2----------");
-            rs = set.executeQuery("SELECT * FROM USUARIOS");
-            while (rs.next()) {
-                cad = rs.getString("NOMBRE");
-                System.out.println("------------------"+cad);
-                cad = cad.trim();
-                if (cad.compareTo(user.trim()) == 0) {
-                    existe = true;
-                }
-            }
-            rs.close();
-            set.close();
-        } catch (Exception e) {
-            System.out.println("No lee de la tabla");
-            System.out.println(e);
-        }
-        return (existe);
-    }
-public boolean comprobarPassword(String user, String password) {
-        boolean correcta = false;
-        String cad;
-        try {
-            set = con.createStatement();
-            rs = set.executeQuery("SELECT PASSWORD FROM USUARIOS WHERE USUARIO='" + user + "'");
-            while (rs.next()) {
-                cad = rs.getString("PASSWORD");
-                cad = cad.trim();
-                if (cad.compareTo(password.trim()) == 0) {
-                    correcta = true;
-                }
-            }
-            rs.close();
-            set.close();
-        } catch (Exception e) {
-            System.out.println("No lee de la tabla");
-        }
-        return (correcta);
-    }
-public boolean tipoUsuario(String user) {
-        boolean cad = false;
-        try {
-            set = con.createStatement();
-            rs = set.executeQuery("SELECT TIPO FROM USUARIOS WHERE NOMBRE='" + user + "'");
+            Connection con, con2;
+            Statement set, set2;
+            ResultSet rs, rss;
+            String incorrecto = "";
 
-            while (rs.next()) {
-                cad = rs.getBoolean("TIPO");
-            }
-            rs.close();
-            set.close();
-        } catch (Exception e) {
-            System.out.println("No lee de la tabla");
-        }
-        return (cad);
-    }
-
-    public void cerrarConexion() {
-        try {
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-             
-            public void iniciar(ServletConfig cfg) throws ServletException {
+            public boolean existeUsuario(String user) {
+                boolean existe = false;
+                String cad;
                 try {
-                    abrirConexion();
+                    set = con.createStatement();
+                    rs = set.executeQuery("SELECT * FROM USUARIOS");
+                    while (rs.next()) {
+                        cad = rs.getString("NOMBRE");
+                        System.out.println("------------------" + cad);
+                        cad = cad.trim();
+                        if (cad.compareTo(user.trim()) == 0) {
+                            existe = true;
+                        }
+                    }
+                    rs.close();
+                    set.close();
                 } catch (Exception e) {
+                    System.out.println("No lee de la tabla existeUsuario");
                     System.out.println(e);
                 }
+                return (existe);
             }
 
-        private Connection con;
-    private Statement set;
-    private ResultSet rs;
+            public boolean comprobarPassword(String user, String password) {
+                boolean correcta = false;
+                String cad;
+                try {
+                    set = con.createStatement();
+                    rs = set.executeQuery("SELECT PASSWORD FROM USUARIOS WHERE NOMBRE='" + user + "'");
+                    while (rs.next()) {
+                        cad = rs.getString("PASSWORD");
+                        cad = cad.trim();
+                        if (cad.compareTo(password.trim()) == 0) {
+                            correcta = true;
+                        }
+                    }
+                    rs.close();
+                    set.close();
+                } catch (Exception e) {
+                    System.out.println("No lee de la tabla comprobarPassword");
+                }
+                return (correcta);
+            }
+
+            public boolean tipoUsuario(String user) {
+                boolean cad = false;
+                try {
+                    set = con.createStatement();
+                    rs = set.executeQuery("SELECT TIPO FROM USUARIOS WHERE NOMBRE='" + user + "'");
+
+                    while (rs.next()) {
+                        cad = rs.getBoolean("TIPO");
+                    }
+                    rs.close();
+                    set.close();
+                } catch (Exception e) {
+                    System.out.println("No lee de la tabla tipoUsuario");
+                }
+                return (cad);
+            }
+
         %>
 
         <%
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
             String user = (String) request.getParameter("user");
             String password = (String) request.getParameter("password");
-            System.out.println(user);
-            System.out.println(password);
-            
+            //System.out.println(user);
+            //System.out.println(password);
+
             if (existeUsuario(user)) {
-                    if (comprobarPassword(user, password)) {
-                        if (tipoUsuario(user)) {
-                            //El usuario existe y su contraseña es correcta, es un administrador
-                            response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.html"));
-                        } else {
-                            //El usuario existe y su contraseña es correcta, es un cliente
-                            response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.html"));
-                        }
+                if (comprobarPassword(user, password)) {
+                    System.out.println("alrright !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+                    if (tipoUsuario(user)) {
+                        System.out.println("alrright ES UN ADMIN");
+                        //El usuario existe y su contraseña es correcta, es un administrador
+                        //response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.html"));
                     } else {
-                        System.out.println("La contraseña introducida es incorrecta");
+                        System.out.println("alrright ES UN CLIENTE");
+                        //El usuario existe y su contraseña es correcta, es un cliente
+                        //response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                     }
                 } else {
-                    System.out.println("El usuario no existe");
+                    System.out.println("La contraseña introducida es incorrecta");
+                    incorrecto = "La contraseña es incorrecta";
+                    
                 }
-            
+            } else {
+                System.out.println("El usuario no existe");
+            }
+
         %>
         
+        <%=incorrecto+""%>
+
 
 
     </body>
