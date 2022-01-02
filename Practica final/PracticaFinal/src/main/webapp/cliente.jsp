@@ -21,6 +21,7 @@
             Statement sDestino;
             ResultSet rsOrigen;
             ResultSet rsDestino;
+            int i = 1;
         %>
         <%
             c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
@@ -28,8 +29,8 @@
             sOrigen = c.createStatement();
             sDestino = c.createStatement();
 
-            rsOrigen = sOrigen.executeQuery("SELECT ORIGEN FROM VUELOS");
-            rsDestino = sDestino.executeQuery("SELECT DESTINO FROM VUELOS");
+            rsOrigen = sOrigen.executeQuery("SELECT DISTINCT ORIGEN FROM VUELOS");
+            rsDestino = sDestino.executeQuery("SELECT DISTINCT DESTINO FROM VUELOS");
         %>
         <br>
         <br>
@@ -44,7 +45,7 @@
 
                     <select name="origen">
                         <% while (rsOrigen.next()) {%>
-                        <option value="<%= rsOrigen.getString(1)%>" name="circuito">
+                        <option value="<%= rsOrigen.getString(1)%>" name="nombreOrigen">
                             <%= rsOrigen.getString(1)%>
                         </option>
                         <% }%>
@@ -59,7 +60,7 @@
 
                     <select name="destino">
                         <% while (rsDestino.next()) {%>
-                        <option value="<%= rsDestino.getString(1)%>" name="circuito">
+                        <option value="<%= rsDestino.getString(1)%>" name="nombreDestino">
                             <%= rsDestino.getString(1)%>
                         </option>
                         <% }%>
@@ -68,12 +69,11 @@
 
                 <td class="espacioColumnas3">
                     <label>Fecha</label>
-
                     <br>
                     <br>
-
-                    <select name="fecha">
-                    </select>
+                    <input type="date" id="fechas" name="fechas">
+                    <br>
+                    <br>
                 </td>
 
                 <td class="espacioColumnas4">
@@ -88,7 +88,15 @@
                     <label>Numero de viajeros</label>
                     <br>
                     <br>
-                    <input type="number" name="num_viajeros" required minlength="1" min="4" max="10" />
+                    <select name="num_viajeros">
+                        <% while (i<11) {%>
+                        <option value="<%= i%>" name="nombreDestino">
+                            <%= i%>
+                        </option>
+                        <%
+                            i++;
+                        }%>
+                    </select>
                 </td>
             </tr>
 
@@ -109,7 +117,11 @@
 
         <a href="pagar.jsp" class="botonPagar"><button>Pagar</button></a>
 
+        <%
+        
 
+        %>
     </body>
+    
 
 </html>

@@ -38,7 +38,7 @@
                 <br>
                 <br>
 
-                <input type="radio" name="registro" value="Registrarse">¿Registrarse?
+                <input type="radio" name="registro" value="true">¿Registrarse?
 
                 <br>
                 <br>
@@ -120,12 +120,12 @@
             public boolean insertarUsuario(String user, String password) {
                 boolean insertado = false;
                 try {
-                    set = con.createStatement();
-
+                    //antes estaba set = con.createStatement(); aquí
                     if (existeUsuario(user)) {
                         System.out.println("El usuario ya existe perraco");
                     } else {
-                        System.out.println("El usuario sera introducido a continuacion con los valores " + user + password);
+                        set = con.createStatement();//esto va aqui y no en la linea 123
+                        System.out.println("El usuario sera introducido a continuacion con los valores " + user +":"+ password);
                         //set.executeUpdate("INSERT INTO USUARIOS VALUES ('User3', '1234', FALSE)");
                         //El sistema solo acepta registros de CLIENTES NO DE ADMINISTRADORES, no se especifica nada en la guia, lo dejamos asi
                         set.executeUpdate("INSERT INTO USUARIOS VALUES ('" + user + "', '" + password + "', FALSE)");
@@ -137,9 +137,19 @@
                     set.close();
                 } catch (Exception e) {
                     System.out.println("No lee de la tabla insertarUsuario");
+                    System.out.println(e);
+
                 }
 
                 return insertado;
+            }
+            //funcion que comprueba si el radio registro esta marcado o no
+            public boolean comprobarRegistro(String r){
+            boolean reg = true;
+            if(r == null){
+                reg = false;
+            }
+            return reg;
             }
         %>
 
@@ -155,7 +165,7 @@
             //La linea 157 tendria q ser == pero no entra, esta asi para poder corregir mientras insertarUsuario()
             //Claro eso jode el inicio de sesion normal... no asustarse 
             //Logica de funcionamiento
-            if (regist == "Registrarse") {
+            if (comprobarRegistro(regist)) {
                 System.out.println("Entramos al modo registro");
                 insertarUsuario(user, password);
             } else {
@@ -165,9 +175,11 @@
                         if (tipoUsuario(user)) {
                             System.out.println("El usuario existe y su contraseña es correcta, es un administrador");
                             response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.jsp"));
+                            incorrecto = "";
                         } else {
                             System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
-                            //response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
+                            incorrecto = "";
+                            response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                         }
                     } else {
                         System.out.println("La contraseña introducida es incorrecta");
@@ -175,12 +187,12 @@
                     }
                 } else {
                     System.out.println("El usuario no existe");
+                    incorrecto = "El usuario no existe";
                 }
             }
 
         %>
-
-        Esto ponedlo como querais, lo he dejado asi pq se ve q funciona
+        
         <%=incorrecto + ""%>
 
     </body>
