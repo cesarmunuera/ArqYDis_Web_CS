@@ -43,7 +43,7 @@
                 <br>
                 <br>
 
-                <input type="submit" id="Enviar" value="Enviar" class="botonEnviar">
+                <input type="submit" name="enviar" value="Enviar" class="botonEnviar">
 
 
             </div>
@@ -120,15 +120,12 @@
             public boolean insertarUsuario(String user, String password) {
                 boolean insertado = false;
                 try {
-                    //antes estaba set = con.createStatement(); aquí
                     if (existeUsuario(user)) {
                         System.out.println("El usuario ya existe perraco");
                     } else {
                         set = con.createStatement();//esto va aqui y no en la linea 123
-                        System.out.println("El usuario sera introducido a continuacion con los valores " + user +":"+ password);
-                        //set.executeUpdate("INSERT INTO USUARIOS VALUES ('User3', '1234', FALSE)");
-                        //El sistema solo acepta registros de CLIENTES NO DE ADMINISTRADORES, no se especifica nada en la guia, lo dejamos asi
-                        set.executeUpdate("INSERT INTO USUARIOS VALUES ('" + user + "', '" + password + "', FALSE)");
+                        System.out.println("El usuario sera introducido a continuacion con los valores " + user + ":" + password);
+                        set.executeUpdate("INSERT INTO USUARIOS VALUES ('" + user + "', '" + password + "', FALSE, 0)");
                         insertado = true;
                         System.out.println("Usuario introducido correctamente");
                     }
@@ -143,13 +140,14 @@
 
                 return insertado;
             }
-            //funcion que comprueba si el radio registro esta marcado o no
-            public boolean comprobarRegistro(String r){
-            boolean reg = true;
-            if(r == null){
-                reg = false;
-            }
-            return reg;
+
+            //Funcion que comprueba si el radio registro esta marcado o no (YA NO SIRVE !!!!!!!!!!!!!!!!!!!!!!!!!)
+            public boolean comprobarRegistro(String r) {
+                boolean reg = true;
+                if (r == null) {
+                    reg = false;
+                }
+                return reg;
             }
         %>
 
@@ -158,41 +156,44 @@
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
 
             //Obtenemos parametros del submit del html
-            String user = (String) request.getParameter("user");
-            String password = (String) request.getParameter("password");
-            String regist = (String) request.getParameter("registro");
-            System.out.println(regist);
-            //La linea 157 tendria q ser == pero no entra, esta asi para poder corregir mientras insertarUsuario()
-            //Claro eso jode el inicio de sesion normal... no asustarse 
+            String user = request.getParameter("user");
+            String password = request.getParameter("password");
+            String regist = request.getParameter("registro");
+            String boton = request.getParameter("enviar");
+
             //Logica de funcionamiento
-            if (comprobarRegistro(regist)) {
+            if (regist != null) {
                 System.out.println("Entramos al modo registro");
                 insertarUsuario(user, password);
             } else {
-                System.out.println("Entramos en el modo inicio de sesion");
-                if (existeUsuario(user)) {
-                    if (comprobarPassword(user, password)) {
-                        if (tipoUsuario(user)) {
-                            System.out.println("El usuario existe y su contraseña es correcta, es un administrador");
-                            response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.jsp"));
-                            incorrecto = "";
+                if (boton != null) {
+                    System.out.println("Entramos en el modo inicio de sesion");
+                    if (existeUsuario(user)) {
+                        if (comprobarPassword(user, password)) {
+                            if (tipoUsuario(user)) {
+                                System.out.println("El usuario existe y su contraseña es correcta, es un administrador");
+                                response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.jsp"));
+                                incorrecto = "";
+                            } else {
+                                System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
+                                incorrecto = "";
+                                response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
+                            }
                         } else {
-                            System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
-                            incorrecto = "";
-                            response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
+                            System.out.println("La contraseña introducida es incorrecta");
+                            incorrecto = "La contraseña es incorrecta";
                         }
                     } else {
-                        System.out.println("La contraseña introducida es incorrecta");
-                        incorrecto = "La contraseña es incorrecta";
+                        System.out.println("El usuario no existe");
+                        incorrecto = "El usuario no existe";
                     }
                 } else {
-                    System.out.println("El usuario no existe");
-                    incorrecto = "El usuario no existe";
+                    System.out.println("Modo null ...");
                 }
             }
 
         %>
-        
+
         <%=incorrecto + ""%>
 
     </body>

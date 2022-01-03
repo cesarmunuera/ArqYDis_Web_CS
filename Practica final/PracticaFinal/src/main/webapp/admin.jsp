@@ -4,7 +4,6 @@
 <%@ page import="java.sql.*"%>
 <!DOCTYPE html>
 
-
 <html lang="es" manifest="mimanifest.manifest">
 
     <head>
@@ -39,7 +38,6 @@
                         <br>
                         <br>
                         <label>Precio</label>
-                        <!--HAY QUE HACER LO DE LA ID Q SERA NUMERO ELEMENTOS DE LA TABLA++ -->
                     </td>
                     <td>
                         <input type="text" name="origen"/>
@@ -51,7 +49,7 @@
                         <input type="date" name="fecha">
                         <br>
                         <br>
-                        <input type="num" name="precio"/>
+                        <input type="text" name="precio"/>
                     </td>
                 </tr>
         </table>
@@ -61,7 +59,7 @@
         <br>
         <br>
 
-        <input type="submit" id="Generar Vuelo" value="Generar Vuelo" class="botonesGenerarVuelo">
+        <input type="submit" name="registro" id="Generar Vuelo" value="Generar Vuelo" class="botonesGenerarVuelo">
     </form>
 
     <br>
@@ -75,15 +73,14 @@
         Statement set;
         ResultSet rs;
 
-        public boolean existeVuelo(String id) {
+        /*public boolean existeVuelo(String id) {
             boolean existe = false;
             String cad;
             try {
                 set = con.createStatement();
-                rs = set.executeQuery("SELECT * FROM USUARIOS");
+                rs = set.executeQuery("SELECT * FROM VUELOS");
                 while (rs.next()) {
                     cad = rs.getString("ID");
-                    System.out.println("------------------" + cad);
                     cad = cad.trim();
                     if (cad.compareTo(id.trim()) == 0) {
                         existe = true;
@@ -96,25 +93,24 @@
                 System.out.println(e);
             }
             return (existe);
-        }
+        }*/
     %>
     <%
         //Creamos la conexion con la base de datos, esto es el driver
         con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
 
-        //Obtenemos parametros del submit del html
-        String origen = (String) request.getParameter("origen");
-        String destino = (String) request.getParameter("origen");
-        String fecha = (String) request.getParameter("origen");//esta hay q mirar q retorna la mierda esa del input
-        int precio = Integer.parseInt(request.getParameter("precio"));
+        //Comprobamos primero que el boton este marcado para evitar errores
+        String regist = (String) request.getParameter("registro");
 
-        System.out.println("El origen recibido es" + origen);
-        System.out.println("El destino recibido es" + destino);
-        //System.out.println("La fecha recibids es" + fecha);
-        System.out.println("El precio recibido es" + precio);
-
-        //Primero generamos una id aleatoria de 6 numeros (6 por ejemplo)
-        //Math random, checkeo de id existente, inserccion en la bbdd
+        if (regist == null) {
+            System.out.println("Modo fallo (null), ignorando ...");
+        } else {
+            //Obtenemos parametros del submit del html
+            String origen = request.getParameter("origen");
+            String destino = request.getParameter("destino");
+            int precio = Integer.parseInt(request.getParameter("precio"));
+            //Falta la fecha
+        }
 
     %>
 
