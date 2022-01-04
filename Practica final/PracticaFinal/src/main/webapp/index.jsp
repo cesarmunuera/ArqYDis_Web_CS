@@ -194,6 +194,7 @@
                                 System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
                                 session.setAttribute("Nombre", user);
                                 session.setAttribute("Viajes", numeroViajes(user));
+                                System.out.println("El numero de viajes del cliente es " + numeroViajes(user));
                                 incorrecto = "";
                                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                             }
