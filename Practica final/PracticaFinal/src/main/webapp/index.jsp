@@ -56,6 +56,23 @@
             String incorrecto = "";
 
             // ---------------------------------  METODOS DE INICIO DE SESION
+            public int numeroViajes(String user) {
+                int numViajes = 0;
+                try {
+                    set = con.createStatement();
+                    rs = set.executeQuery("SELECT VIAJES FROM USUARIOS WHERE NOMBRE='" + user + "'");
+                    while (rs.next()) {
+                        numViajes = Integer.parseInt(rs.getString("VIAJES"));
+                    }
+                    rs.close();
+                    set.close();
+                } catch (Exception e) {
+                    System.out.println("No lee de la tabla numeroViajes");
+                    System.out.println(e);
+                }
+                return (numViajes);
+            }
+
             public boolean existeUsuario(String user) {
                 boolean existe = false;
                 String cad;
@@ -141,35 +158,42 @@
                 return insertado;
             }
 
-            
-            
+
         %>
 
         <%
             //Creamos la conexion con la base de datos, esto es el driver
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
 
-            //Obtenemos parametros del submit del html
-            String user = request.getParameter("user");
-            String password = request.getParameter("password");
-            String regist = request.getParameter("registro");
+            //Obtenemos el parametro del boton
             String boton = request.getParameter("enviar");
-            incorrecto = "";
-            //Logica de funcionamiento
-            if (regist != null) {
-                System.out.println("Entramos al modo registro");
-                insertarUsuario(user, password);
-            } else {
-                if (boton != null) {
+
+            if (boton != null) {
+                //Obtenemos los parametros del HTML
+                String user = request.getParameter("user");
+                String password = request.getParameter("password");
+                String regist = request.getParameter("registro");
+                incorrecto = "";
+                //Logica de funcionamiento
+                if (regist != null) {
+                    System.out.println("Entramos al modo registro");
+                    insertarUsuario(user, password);
+                    //Iniciamos sesion con el cliente que se acaba de registrar
+                    response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
+                } else {
                     System.out.println("Entramos en el modo inicio de sesion");
                     if (existeUsuario(user)) {
                         if (comprobarPassword(user, password)) {
                             if (tipoUsuario(user)) {
                                 System.out.println("El usuario existe y su contraseña es correcta, es un administrador");
-                                response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.jsp"));
+                                //Aqui no tiene sentido setear el numero de viajes, ya que el admin no compra
+                                session.setAttribute("Nombre", user);
                                 incorrecto = "";
+                                response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.jsp"));
                             } else {
                                 System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
+                                session.setAttribute("Nombre", user);
+                                session.setAttribute("Viajes", numeroViajes(user));
                                 incorrecto = "";
                                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                             }
@@ -181,10 +205,11 @@
                         System.out.println("El usuario no existe");
                         incorrecto = "El usuario no existe";
                     }
-                } else {
-                    System.out.println("Modo null ...");
                 }
+            } else {
+                System.out.println("Modo null ...");
             }
+
 
         %>
 

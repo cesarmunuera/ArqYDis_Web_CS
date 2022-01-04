@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
@@ -29,14 +30,15 @@
             Statement sOrigen;
             Statement sDestino;
             Statement sCapacidad;
-            Statement sprecio;
+            Statement sPrecio;
             ResultSet rsOrigen;
             ResultSet rsDestino;
             ResultSet rsCapacidad;
             ResultSet rsPrecio;
-            int i = 1, precioTasas = 5;
-            float precioFinal = 0;
-            
+            int i = 1, precioTasas = 5, capacidad = 0;
+            double precioFinal = 0, precio = 0;
+            DecimalFormat df = new DecimalFormat("#.00");
+
         %>
         <%
             c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
@@ -44,7 +46,7 @@
             sOrigen = c.createStatement();
             sDestino = c.createStatement();
             sCapacidad = c.createStatement();
-            sprecio = c.createStatement();
+            sPrecio = c.createStatement();
 
             rsOrigen = sOrigen.executeQuery("SELECT DISTINCT ORIGEN FROM VUELOS");
             rsDestino = sDestino.executeQuery("SELECT DISTINCT DESTINO FROM VUELOS");
@@ -108,13 +110,16 @@
                         <br>
                         <br>
                         <select name="num_viajeros">
-                            <% while (i < 11) {%>
-                            <option value="<%= i%>" name="option_viajeros">
-                                <%= i%>
-                            </option>
-                            <%
-                                    i++;
-                                }%>
+                            <option value="1" name="option_viajeros">1</option>
+                            <option value="2" name="option_viajeros">2</option>
+                            <option value="3" name="option_viajeros">3</option>
+                            <option value="4" name="option_viajeros">4</option>
+                            <option value="5" name="option_viajeros">5</option>
+                            <option value="6" name="option_viajeros">6</option>
+                            <option value="7" name="option_viajeros">7</option>
+                            <option value="8" name="option_viajeros">8</option>
+                            <option value="9" name="option_viajeros">9</option>
+                            <option value="10" name="option_viajeros">10</option>
                         </select>
                     </td>
                 </tr>
@@ -122,12 +127,10 @@
             </table>
 
             <br>
-            <br>
-            <br>
 
             <div class="inicio">
-                <input type="submit" id="calcularPrecio" value="Calcular Precio" name="botonPagar">
-                <input type="text" id="cajaPrecio" value="<%= precioFinal%>" readonly onmousedown="return false;" />
+                <input type="submit" value="Calcular Precio" name="botonCalcularPrecio">
+
             </div>
         </form>
 
@@ -135,22 +138,19 @@
         <br>
         <br>
 
-        <a href="pagar.jsp" class="botonPagar"><button>Pagar</button></a>
-
-        <%!
-            Connection con;
+        <%!            Connection con;
             Statement set;
             ResultSet rs;
+
             /*
             public java.util.Date convertirFecha(String fecha) throws ParseException {
                 DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
                 java.util.Date fechaBuena = dateFormat.parse(fecha);
                 return fechaBuena;
             }*/
-
-            public boolean comprobarIdaVuelta(String r){
+            public boolean comprobarIdaVuelta(String r) {
                 boolean reg = true;
-                if(r == null){
+                if (r == null) {
                     reg = false;
                 }
                 return reg;
@@ -162,36 +162,52 @@
         <%
             //Creamos la conexion con la base de datos, esto es el driver
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
-            String pagar = request.getParameter("botonPagar");
+            String pagar = request.getParameter("botonCalcularPrecio");
             //Obtenemos parametros del submit del html
-            if(pagar != null){
+            if (pagar != null) {
+                System.out.println("Entrando en modo calcular precio");
                 String origen = request.getParameter("origen");
                 String destino = request.getParameter("destino");
                 String fecha = request.getParameter("fechas");
                 String idaVuelta = (String) request.getParameter("idaVuelta");
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
 
-                rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '"+ fecha +"'" );
-                while (rsCapacidad.next()){
-                    int capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
+                rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
+                System.out.println("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
+                while (rsCapacidad.next()) {
+                    capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
                 }
-                if(capacidad !=null){
-                    rsPrecio = sPrecio.executeQuery("SELECT PRECIO FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '"+ fecha +"'" );
-                    while (rsPrecio.next()) {
-                        int precio = Integer.parseInt(rsPrecio.getString("PRECIO"));
+                System.out.println("La capacidad es: " + capacidad);
+                if (capacidad > 0) {
+                    if (numViajeros <= capacidad) {
+                        rsPrecio = sPrecio.executeQuery("SELECT PRECIO FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
+                        while (rsPrecio.next()) {
+                            precio = Double.parseDouble(rsPrecio.getString("PRECIO"));
+                        }
+                        System.out.println("El precio es: " + precio);
+                        precioFinal = ((precio * 1.21) + precioTasas) * numViajeros;
+                        if (idaVuelta != null) {
+                            precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
+                        }
+                        System.out.println(precioFinal);
+                    } else {
+                        System.out.println("El numero de plazas solicitadas es mayor a las disponibles");
                     }
-                
-                    precioFinal = ((precio * 1.21) + precioTasas) * numViajeros;
-                    if (idaVuelta!= null) {
-                        precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
-                    }
-                    System.out.println(precioFinal);
+                } else {
+                    System.out.println("Los datos seleccionados no son correctos");
                 }
-            }else System.out.println('Boton pagar no pulsado');
-                    
+            } else {
+                System.out.println("Modo null de pagar ...");
+            }
         %>
-          
-    </body>
 
+        <input type="text" value="<%= df.format(precioFinal)%>" readonly onmousedown="return false;" class="botonPagar"/>
+
+        <br>
+        <br>
+
+        <a href="pagar.jsp" class="botonPagar"><button>Pagar</button></a>
+
+    </body>
 
 </html>
