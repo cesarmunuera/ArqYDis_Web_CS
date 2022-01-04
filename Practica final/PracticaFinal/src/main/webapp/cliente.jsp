@@ -22,21 +22,29 @@
         <%@ page import="java.sql.*"%>
         <%@page import="java.util.regex.Pattern"%>
         <%@page import="java.text.DateFormat"%>
-        
-        
+
+
         <%!
             Connection c;
             Statement sOrigen;
             Statement sDestino;
+            Statement sCapacidad;
+            Statement sprecio;
             ResultSet rsOrigen;
             ResultSet rsDestino;
-            int i = 1;
+            ResultSet rsCapacidad;
+            ResultSet rsPrecio;
+            int i = 1, precioTasas = 5;
+            float precioFinal = 0;
+            
         %>
         <%
             c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
 
             sOrigen = c.createStatement();
             sDestino = c.createStatement();
+            sCapacidad = c.createStatement();
+            sprecio = c.createStatement();
 
             rsOrigen = sOrigen.executeQuery("SELECT DISTINCT ORIGEN FROM VUELOS");
             rsDestino = sDestino.executeQuery("SELECT DISTINCT DESTINO FROM VUELOS");
@@ -118,8 +126,8 @@
             <br>
 
             <div class="inicio">
-                <input type="submit" id="calcularPrecio" value="Calcular Precio">
-                <input type="text" id="cajaPrecio" value="" readonly onmousedown="return false;" />
+                <input type="submit" id="calcularPrecio" value="Calcular Precio" name="botonPagar">
+                <input type="text" id="cajaPrecio" value="<%= precioFinal%>" readonly onmousedown="return false;" />
             </div>
         </form>
 
@@ -154,25 +162,35 @@
         <%
             //Creamos la conexion con la base de datos, esto es el driver
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
-
+            String pagar = request.getParameter("botonPagar");
             //Obtenemos parametros del submit del html
-            String origen = request.getParameter("nombreOrigen");
-            String destino = request.getParameter("nombreDestino");
-            String fecha = request.getParameter("fechas");
-            System.out.println(fecha);
-            //System.out.println(convertirFecha(fecha).toString());
-            
-            String idaVuelta = (String) request.getParameter("idaVuelta");
-            if (comprobarIdaVuelta(idaVuelta)) {
-                System.out.println("SI ida y vuelta");
-            } else {
-                System.out.println("NO ida y vuelta");
-            }
-            
-            String numViajeros = request.getParameter("num_viajeros");
-            System.out.println(numViajeros + " viajeros.");
+            if(pagar != null){
+                String origen = request.getParameter("origen");
+                String destino = request.getParameter("destino");
+                String fecha = request.getParameter("fechas");
+                String idaVuelta = (String) request.getParameter("idaVuelta");
+                int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
 
+                rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '"+ fecha +"'" );
+                while (rsCapacidad.next()){
+                    int capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
+                }
+                if(capacidad !=null){
+                    rsPrecio = sPrecio.executeQuery("SELECT PRECIO FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '"+ fecha +"'" );
+                    while (rsPrecio.next()) {
+                        int precio = Integer.parseInt(rsPrecio.getString("PRECIO"));
+                    }
+                
+                    precioFinal = ((precio * 1.21) + precioTasas) * numViajeros;
+                    if (idaVuelta!= null) {
+                        precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
+                    }
+                    System.out.println(precioFinal);
+                }
+            }else System.out.println('Boton pagar no pulsado');
+                    
         %>
+          
     </body>
 
 

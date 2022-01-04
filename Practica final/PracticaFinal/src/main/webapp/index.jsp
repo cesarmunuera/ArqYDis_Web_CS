@@ -141,14 +141,8 @@
                 return insertado;
             }
 
-            //Funcion que comprueba si el radio registro esta marcado o no (YA NO SIRVE !!!!!!!!!!!!!!!!!!!!!!!!!)
-            public boolean comprobarRegistro(String r) {
-                boolean reg = true;
-                if (r == null) {
-                    reg = false;
-                }
-                return reg;
-            }
+            
+            
         %>
 
         <%
@@ -160,7 +154,7 @@
             String password = request.getParameter("password");
             String regist = request.getParameter("registro");
             String boton = request.getParameter("enviar");
-
+            incorrecto = "";
             //Logica de funcionamiento
             if (regist != null) {
                 System.out.println("Entramos al modo registro");
