@@ -138,26 +138,21 @@
                 boolean insertado = false;
                 try {
                     if (existeUsuario(user)) {
-                        System.out.println("El usuario ya existe perraco");
+                        System.out.println("El usuario ya existe");
                     } else {
-                        set = con.createStatement();//esto va aqui y no en la linea 123
-                        System.out.println("El usuario sera introducido a continuacion con los valores " + user + ":" + password);
+                        set = con.createStatement();
                         set.executeUpdate("INSERT INTO USUARIOS VALUES ('" + user + "', '" + password + "', FALSE, 0)");
                         insertado = true;
                         System.out.println("Usuario introducido correctamente");
                     }
-
                     rs.close();
                     set.close();
                 } catch (Exception e) {
                     System.out.println("No lee de la tabla insertarUsuario");
                     System.out.println(e);
-
                 }
-
                 return insertado;
             }
-
 
         %>
 
@@ -194,7 +189,6 @@
                                 System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
                                 session.setAttribute("Nombre", user);
                                 session.setAttribute("Viajes", numeroViajes(user));
-                                System.out.println("El numero de viajes del cliente es " + numeroViajes(user));
                                 incorrecto = "";
                                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                             }

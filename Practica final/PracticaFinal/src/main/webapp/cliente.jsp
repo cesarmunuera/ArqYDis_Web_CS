@@ -171,9 +171,10 @@
                 String fecha = request.getParameter("fechas");
                 String idaVuelta = (String) request.getParameter("idaVuelta");
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
-
                 rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
-                System.out.println("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
+                //System.out.println("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
+                
+                //Logica de funcionamiento
                 while (rsCapacidad.next()) {
                     capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
                 }
@@ -196,6 +197,8 @@
                 } else {
                     System.out.println("Los datos seleccionados no son correctos");
                 }
+                //Guardamos en sesion el precio redondeado, en string
+                session.setAttribute("Precio", df.format(precioFinal));
             } else {
                 System.out.println("Modo null de pagar ...");
             }
@@ -206,7 +209,7 @@
         <br>
         <br>
 
-        <a href="pagar.jsp" class="botonPagar"><button>Pagar</button></a>
+        <a href="pago.jsp" class="botonPagar"><button>Completar la compra</button></a>
 
     </body>
 

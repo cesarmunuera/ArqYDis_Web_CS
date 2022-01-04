@@ -2,6 +2,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
+<%@ page import="java.util.Random"%>
+
 <!DOCTYPE html>
 
 <html lang="es" manifest="mimanifest.manifest">
@@ -72,8 +74,10 @@
         Connection con;
         Statement set;
         ResultSet rs;
+        int valor;
 
-        /*public boolean existeVuelo(String id) {
+        // Funciones auxiliares
+        public boolean existeID(String id) {
             boolean existe = false;
             String cad;
             try {
@@ -93,7 +97,29 @@
                 System.out.println(e);
             }
             return (existe);
-        }*/
+        }
+
+        public boolean insertarVuelo(String id, String origen, String destino, int precio) {
+            boolean insertado = false;
+            try {
+                if (existeID(id)) {
+                    System.out.println("El vuelo ya existe perraco");
+                } else {
+                    set = con.createStatement();    //FALTA LA FECHA A LA QUERY
+                    set.executeUpdate("INSERT INTO VUELOS VALUES ('" + id + "', '" + origen + "', '" + destino + "', 75, '" + precio + "')");
+                    insertado = true;               //Suponemos que los vuelos siempre parten de 75 plazas
+                    System.out.println("Usuario introducido correctamente");
+                }
+                rs.close();
+                set.close();
+            } catch (Exception e) {
+                System.out.println("No lee de la tabla insertarUsuario");
+                System.out.println(e);
+            }
+            return insertado;
+        }
+
+
     %>
     <%
         //Creamos la conexion con la base de datos, esto es el driver
@@ -102,21 +128,26 @@
         //Comprobamos primero que el boton este marcado para evitar errores
         String regist = (String) request.getParameter("registro");
 
-        if (regist == null) {
-            System.out.println("Modo fallo (null), ignorando ...");
-        } else {
+        if (regist != null) {
             //Obtenemos parametros del submit del html
             String origen = request.getParameter("origen");
             String destino = request.getParameter("destino");
             int precio = Integer.parseInt(request.getParameter("precio"));
             //Falta la fecha
+
+            //Logica de funcionamiento
+            valor = (int) Math.floor(Math.random() * 100 + 1);
+            String id = String.valueOf(valor);          //Pasamos a String para poder comparar
+            //FALTA LA FECHA
+            if (insertarVuelo(id, origen, destino, precio)) {
+                System.out.println("Vuelo insertado correctamente");
+            } else{
+                System.out.println("Fallo al insertar el vuelo");
+            }
+        } else {
+            System.out.println("Modo null ...");
         }
-
     %>
-
-
-
-
 
 </body>
 
