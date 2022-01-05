@@ -40,19 +40,17 @@
         con origen <%=session.getAttribute("Origen")%> y destino
         <%=session.getAttribute("Destino")%>.
         <%
+            double precioFinal = Double.parseDouble(session.getAttribute("Precio").toString());
             String descuento = "";
             if (session.getAttribute("Viajes").equals(2)) {
                 System.out.println("Felicidades, obtienes un descuento");
-                double precioFinal = Double.parseDouble(session.getAttribute("Precio").toString());
                 precioFinal = precioFinal * 0.5;
                 descuento = "¡Felicidades! Has obtenido un descuento al ser esta tu tercera compra. El precio final es de: " + precioFinal;
-
             } else {
-
+                descuento = "El precio final es de " + precioFinal;
             }
         %>   
-        <%=session.getAttribute("Nombre")%>
-        <%=session.getAttribute("Nombre")%>
+        <%=descuento%>
 
         <br>
         <br>
@@ -112,8 +110,22 @@
         <label for="card-ccv">CCV</label>
         <input type="text" id="card-ccv" maxlength="3" minlength="3"class="cajaPrecio" required pattern="[0-9]+"/>
         <br>
-        <a href="resumen.jsp" class="botonPagar"><button>Pagar</button></a>
+        <input type="submit" value="Pagar" name="botonPagar" class="botonPagar">
         <br>
+        <%
+            String pagar = request.getParameter("botonPagar");
+            if (pagar != null) {
+                switch (Integer.parseInt(session.getAttribute("Viajes").toString())) {
+                    case 0:
+                        actualizarViajes(session.getAttribute("user").toString(), 1);
+                    case 1:
+                        actualizarViajes(session.getAttribute("user").toString(), 2);
+                    case 2:
+                        actualizarViajes(session.getAttribute("user").toString(), 0);
+                }
+                response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/resumen.jsp"));
+            }
+        %>
     </body>
 
 </html>

@@ -192,7 +192,7 @@
                         }
 
                         //Guardamos en sesion los datos de la compra realizada
-                        session.setAttribute("Precio", df.format(precioFinal));
+                        //session.setAttribute("Precio", df.format(precioFinal));
                         session.setAttribute("Origen", origen);
                         session.setAttribute("Destino", destino);
                         session.setAttribute("Fecha", fecha);
