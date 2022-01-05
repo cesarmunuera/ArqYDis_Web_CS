@@ -38,7 +38,7 @@
                 <br>
                 <br>
 
-                <input type="radio" name="registro" value="true">¿Registrarse?
+                <input type="checkbox" name="registro" value="true">¿Registrarse?
 
                 <br>
                 <br>

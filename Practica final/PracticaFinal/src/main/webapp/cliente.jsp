@@ -36,7 +36,7 @@
             ResultSet rsCapacidad;
             ResultSet rsPrecio;
             int i = 1, precioTasas = 5, capacidad = 0;
-            double precioFinal = 0, precio = 0;
+            double precioFinal, precio = 0;
             DecimalFormat df = new DecimalFormat("#.00");
 
         %>
@@ -56,7 +56,6 @@
 
         <form action="" method="POST">
             <table>
-
                 <tr class="espacioColumnas">
                     <td class="espacioColumnas1">
                         <label>Origen</label>
@@ -138,7 +137,8 @@
         <br>
         <br>
 
-        <%!            Connection con;
+        <%!            
+            Connection con;
             Statement set;
             ResultSet rs;
 
@@ -173,7 +173,7 @@
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
                 rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
                 //System.out.println("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
-                
+
                 //Logica de funcionamiento
                 while (rsCapacidad.next()) {
                     capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
@@ -190,15 +190,21 @@
                         if (idaVuelta != null) {
                             precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
                         }
-                        System.out.println(precioFinal);
+
+                        //Guardamos en sesion los datos de la compra realizada
+                        session.setAttribute("Precio", df.format(precioFinal));
+                        session.setAttribute("Origen", origen);
+                        session.setAttribute("Destino", destino);
+                        session.setAttribute("Fecha", fecha);
+                        session.setAttribute("IdaVuelta", idaVuelta);
+                        session.setAttribute("NumeroViajeros", numViajeros);
+
                     } else {
                         System.out.println("El numero de plazas solicitadas es mayor a las disponibles");
                     }
                 } else {
                     System.out.println("Los datos seleccionados no son correctos");
                 }
-                //Guardamos en sesion el precio redondeado, en string
-                session.setAttribute("Precio", df.format(precioFinal));
             } else {
                 System.out.println("Modo null de pagar ...");
             }
@@ -209,7 +215,7 @@
         <br>
         <br>
 
-        <a href="pago.jsp" class="botonPagar"><button>Completar la compra</button></a>
+        <a href="pago.jsp" class="botonPagar" type="reset"><button>Ir al carro</button></a>
 
     </body>
 
