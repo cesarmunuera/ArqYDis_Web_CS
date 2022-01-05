@@ -15,19 +15,18 @@
     <body>
         <h1 style="text-align: left;">Resumen del pedido</h1>
         <br>
-        <br>
+
         <%!
             Connection con;
             Statement set;
-            ResultSet rs;
 
             public boolean actualizarViajes(String user, int viajes) {
                 boolean insertado = false;
                 try {
                     set = con.createStatement();
                     set.executeUpdate("UPDATE USUARIOS SET VIAJES=" + viajes + " WHERE NOMBRE='" + user + "'");
+                    System.out.println("query lanzada");
                     insertado = true;
-                    rs.close();
                     set.close();
                 } catch (Exception e) {
                     System.out.println("No se ha podido actualizar el viaje");
@@ -35,12 +34,38 @@
                 }
                 return insertado;
             }
+
+            public boolean insertarUsuario(String user, String password) {
+                boolean insertado = false;
+                try {
+                    if (existeUsuario(user)) {
+                        System.out.println("El usuario ya existe");
+                    } else {
+                        set = con.createStatement();
+                        set.executeUpdate("INSERT INTO USUARIOS VALUES ('" + user + "', '" + password + "', FALSE, 0)");
+                        insertado = true;
+                        System.out.println("Usuario introducido correctamente");
+                    }
+                    rs.close();
+                    set.close();
+                } catch (Exception e) {
+                    System.out.println("No lee de la tabla insertarUsuario");
+                    System.out.println(e);
+                }
+                return insertado;
+            }
+
         %>
         El numero de billetes es: <%=session.getAttribute("NumeroViajeros")%>, 
         con origen <%=session.getAttribute("Origen")%> y destino
         <%=session.getAttribute("Destino")%>.
         <%
-            double precioFinal = Double.parseDouble(session.getAttribute("Precio").toString());
+            //Creamos la conexion con la base de datos, esto es el driver
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
+            String p = session.getAttribute("Precio").toString().trim();
+            double precioFinal = Double.parseDouble(p);
+            System.out.println("EL PRECIO OBTENIDO DE LA SESION ES: " + session.getAttribute("Precio").toString());
+            //double precioFinal = 1;
             String descuento = "";
             if (session.getAttribute("Viajes").equals(2)) {
                 System.out.println("Felicidades, obtienes un descuento");
@@ -108,21 +133,33 @@
         <br>
         <br>
         <label for="card-ccv">CCV</label>
-        <input type="text" id="card-ccv" maxlength="3" minlength="3"class="cajaPrecio" required pattern="[0-9]+"/>
+        <input type="text" id="card-ccv" maxlength="3" minlength="3" class="cajaPrecio" required pattern="[0-9]+"/>
         <br>
-        <input type="submit" value="Pagar" name="botonPagar" class="botonPagar">
+        <form>
+            <input type="submit" value="Pagar" name="botonPagar" class="botonPagar">
+        </form>
         <br>
         <%
             String pagar = request.getParameter("botonPagar");
-            if (pagar != null) {
+            if (pagar != null) {    //Actualizamos el numero de compras del cliente
                 switch (Integer.parseInt(session.getAttribute("Viajes").toString())) {
                     case 0:
-                        actualizarViajes(session.getAttribute("user").toString(), 1);
+                        System.out.println("Entrando en caso 0 ...........");
+                        actualizarViajes(session.getAttribute("Nombre").toString(), 1);   //En la BBDD
+                        session.setAttribute("Viajes", 1);                                  //En la sesion
+                        break;
                     case 1:
-                        actualizarViajes(session.getAttribute("user").toString(), 2);
+                        System.out.println("Entrando en caso 1 ...........");
+                        actualizarViajes(session.getAttribute("Nombre").toString(), 2);
+                        session.setAttribute("Viajes", 2);
+                        break;
                     case 2:
-                        actualizarViajes(session.getAttribute("user").toString(), 0);
+                        System.out.println("Entrando en caso 2 ...........");
+                        actualizarViajes(session.getAttribute("Nombre").toString(), 0);
+                        session.setAttribute("Viajes", 0);
+                        break;
                 }
+                
                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/resumen.jsp"));
             }
         %>

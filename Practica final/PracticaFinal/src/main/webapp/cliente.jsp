@@ -38,16 +38,13 @@
             int i = 1, precioTasas = 5, capacidad = 0;
             double precioFinal, precio = 0;
             DecimalFormat df = new DecimalFormat("#.00");
-
         %>
         <%
             c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
-
             sOrigen = c.createStatement();
             sDestino = c.createStatement();
             sCapacidad = c.createStatement();
             sPrecio = c.createStatement();
-
             rsOrigen = sOrigen.executeQuery("SELECT DISTINCT ORIGEN FROM VUELOS");
             rsDestino = sDestino.executeQuery("SELECT DISTINCT DESTINO FROM VUELOS");
         %>
@@ -137,17 +134,11 @@
         <br>
         <br>
 
-        <%!            
+        <%!
             Connection con;
             Statement set;
             ResultSet rs;
 
-            /*
-            public java.util.Date convertirFecha(String fecha) throws ParseException {
-                DateFormat dateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-                java.util.Date fechaBuena = dateFormat.parse(fecha);
-                return fechaBuena;
-            }*/
             public boolean comprobarIdaVuelta(String r) {
                 boolean reg = true;
                 if (r == null) {
@@ -155,7 +146,6 @@
                 }
                 return reg;
             }
-
         %>
 
 
@@ -173,7 +163,6 @@
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
                 rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
                 //System.out.println("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
-
                 //Logica de funcionamiento
                 while (rsCapacidad.next()) {
                     capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
@@ -190,15 +179,14 @@
                         if (idaVuelta != null) {
                             precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
                         }
-
                         //Guardamos en sesion los datos de la compra realizada
-                        //session.setAttribute("Precio", df.format(precioFinal));
+                        double roundDbl = Math.round(precioFinal*100.0)/100.0;
+                        session.setAttribute("Precio", roundDbl + "");
                         session.setAttribute("Origen", origen);
                         session.setAttribute("Destino", destino);
                         session.setAttribute("Fecha", fecha);
                         session.setAttribute("IdaVuelta", idaVuelta);
                         session.setAttribute("NumeroViajeros", numViajeros);
-
                     } else {
                         System.out.println("El numero de plazas solicitadas es mayor a las disponibles");
                     }
