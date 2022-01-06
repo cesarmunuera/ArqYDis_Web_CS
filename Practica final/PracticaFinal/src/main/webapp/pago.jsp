@@ -35,7 +35,7 @@
                 return insertado;
             }
 
-            public boolean insertarUsuario(String user, String password) {
+            /*public boolean insertarUsuario(String user, String password) {
                 boolean insertado = false;
                 try {
                     if (existeUsuario(user)) {
@@ -54,7 +54,7 @@
                 }
                 return insertado;
             }
-
+            */
         %>
         El numero de billetes es: <%=session.getAttribute("NumeroViajeros")%>, 
         con origen <%=session.getAttribute("Origen")%> y destino

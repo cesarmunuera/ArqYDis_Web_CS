@@ -14,5 +14,29 @@
     </head>
     <body>
         <h1>Resumen de la compra</h1>
+        <%! 
+            public String generarLocalizador(){
+                String CHAR_LOWER = "abcdefghijklmnopqrstuvwxyz";
+                String CHAR_UPPER = CHAR_LOWER.toUpperCase();
+                String NUMBER = "0123456789";
+
+                String DATA_FOR_RANDOM_STRING = CHAR_UPPER + NUMBER;
+                SecureRandom random = new SecureRandom();
+                StringBuilder sb = new StringBuilder(6);
+                for (int i = 0; i < 6; i++) {
+                    int rndCharAt = random.nextInt(DATA_FOR_RANDOM_STRING.length());
+                    char rndChar = DATA_FOR_RANDOM_STRING.charAt(rndCharAt);
+                    sb.append(rndChar);
+                }
+                return sb.toString();
+            }
+        %>
+        Su localizador es : <%=generarLocalizador())%>
+        El numero de billetes es: <%=session.getAttribute("NumeroViajeros")%>, 
+        con origen <%=session.getAttribute("Origen")%> y destino
+        <%=session.getAttribute("Destino")%>,
+        con fecha <%=session.getAttribute("Fecha")%>.
+        <br>
+        PRECIO TOTAL: <%=session.getAttribute("Precio")%>
     </body>
 </html>
