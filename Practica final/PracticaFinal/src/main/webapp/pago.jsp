@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.*"%>
 <!DOCTYPE html>
 
 <html>
@@ -35,26 +35,23 @@
                 return insertado;
             }
 
-            /*public boolean insertarUsuario(String user, String password) {
+            /*public boolean actualizarCapacidad(int plazasCompradas, int plazasDisponibles){
                 boolean insertado = false;
+                int resultado;
                 try {
-                    if (existeUsuario(user)) {
-                        System.out.println("El usuario ya existe");
-                    } else {
-                        set = con.createStatement();
-                        set.executeUpdate("INSERT INTO USUARIOS VALUES ('" + user + "', '" + password + "', FALSE, 0)");
-                        insertado = true;
-                        System.out.println("Usuario introducido correctamente");
-                    }
-                    rs.close();
+                    resultado = plazasDisponibles - plazasCompradas;
+                    set = con.createStatement();
+                    set.executeUpdate("INSERT INTO VUELOS VALUES ('" + user + "', '" + password + "', FALSE, 0)");
+                    insertado = true;
+                    System.out.println("Usuario introducido correctamente");
                     set.close();
                 } catch (Exception e) {
                     System.out.println("No lee de la tabla insertarUsuario");
                     System.out.println(e);
                 }
                 return insertado;
-            }
-            */
+            }*/
+
         %>
         El numero de billetes es: <%=session.getAttribute("NumeroViajeros")%>, 
         con origen <%=session.getAttribute("Origen")%> y destino
@@ -70,9 +67,9 @@
             if (session.getAttribute("Viajes").equals(2)) {
                 System.out.println("Felicidades, obtienes un descuento");
                 precioFinal = precioFinal * 0.5;
-                descuento = "¡Felicidades! Has obtenido un descuento al ser esta tu tercera compra. El precio final es de: " + precioFinal;
+                descuento = "¡Felicidades! Has obtenido un descuento al ser esta tu tercera compra. El precio final es de: " + precioFinal + " €";
             } else {
-                descuento = "El precio final es de " + precioFinal;
+                descuento = "El precio final es de " + precioFinal + " €";
             }
         %>   
         <%=descuento%>
@@ -141,12 +138,16 @@
         <br>
         <%
             String pagar = request.getParameter("botonPagar");
-            if (pagar != null) {    //Actualizamos el numero de compras del cliente
+            if (pagar != null) {                                                           //Actualizamos el numero de compras del cliente
+
+                String plazasDisp = (String) session.getAttribute("CapacidadVuelo");
+                int plazasDisponibles = Integer.parseInt(plazasDisp);
+
                 switch (Integer.parseInt(session.getAttribute("Viajes").toString())) {
                     case 0:
                         System.out.println("Entrando en caso 0 ...........");
                         actualizarViajes(session.getAttribute("Nombre").toString(), 1);   //En la BBDD
-                        session.setAttribute("Viajes", 1);                                  //En la sesion
+                        session.setAttribute("Viajes", 1);                                //En la sesion
                         break;
                     case 1:
                         System.out.println("Entrando en caso 1 ...........");
@@ -159,7 +160,7 @@
                         session.setAttribute("Viajes", 0);
                         break;
                 }
-                
+
                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/resumen.jsp"));
             }
         %>
