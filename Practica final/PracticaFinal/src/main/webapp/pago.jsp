@@ -20,6 +20,7 @@
             Connection con;
             Statement set, set2;
             ResultSet rs;
+            String idVuelo, origen, destino, fecha;
 
             public boolean actualizarViajes(String user, int viajes) {
                 boolean insertado = false;
@@ -36,27 +37,33 @@
                 return insertado;
             }
 
-            public boolean actualizarCapacidad(int plazasCompradas, int plazasDisponibles) {
-                boolean insertado = false;
-                String idVuelo;
+            public String actualizarCapacidad(String plazasCompradas, String plazasDisponibles, String origen, String destino, String fecha) {
+                String idVuelo = "";
                 int resultado;
                 try {
-                    rs = set2.executeQuery("SELECT ID FROM VUELOS WHERE ORIGEN = '" + session.getAttribute("Origen") + "' AND DESTINO = '" + session.getAttribute("Destino") + "' AND FECHA = '" + session.getAttribute("Fecha") + "'");
+                    System.out.println(plazasCompradas);
+                    System.out.println(plazasDisponibles);
+                    System.out.println(origen);
+                    System.out.println(destino);
+                    System.out.println(fecha);
+                    set2 = con.createStatement();
+/*
+                    rs = set2.executeQuery("SELECT ID FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
                     while (rs.next()) {
                         idVuelo = rs.getString("ID");
                     }
-
-                    resultado = plazasDisponibles - plazasCompradas;
+*/
+                    //resultado = plazasDisponibles - plazasCompradas;
                     set = con.createStatement();
-                    set.executeUpdate("UPDATE VUELOS SET CAPACIDAD=" + resultado + "WHERE ID = '1'");
-                    insertado = true;
-                    System.out.println("Usuario introducido correctamente");
+                    //set.executeUpdate("UPDATE VUELOS SET CAPACIDAD=" + resultado + "WHERE ID = '" + idVuelo + "'");
+                    //session.setAttribute("idVuelo", idVuelo); no se puede actualizar aqui por eso la funcion es string y devuelve el id del vuelo :)
+                    System.out.println("-----------------------------Capacidad actualizada correctamente---------------------------");
                     set.close();
                 } catch (Exception e) {
-                    System.out.println("No lee de la tabla insertarUsuario");
+                    System.out.println("No se actualiza capacidad en la tabla");
                     System.out.println(e);
                 }
-                return insertado;
+                return idVuelo;
             }
 
         %>
@@ -167,7 +174,9 @@
                         session.setAttribute("Viajes", 0);
                         break;
                 }
-
+                idVuelo = actualizarCapacidad(session.getAttribute("NumeroViajeros").toString(),session.getAttribute("CapacidadVuelo").toString(),session.getAttribute("Origen").toString(),session.getAttribute("Destino").toString(),session.getAttribute("Fecha").toString());
+                session.setAttribute("idVuelo", idVuelo);
+                //actualizarCapacidad(Integer.parseInt(session.getAttribute("NumeroViajeros").toString()),Integer.parseInt(session.getAttribute("CapacidadVuelo").toString()),session.getAttribute("Origen").toString(),session.getAttribute("Destino").toString(),session.getAttribute("Fecha").toString());
                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/resumen.jsp"));
             }
         %>

@@ -187,6 +187,8 @@
                         session.setAttribute("Fecha", fecha);
                         session.setAttribute("IdaVuelta", idaVuelta);
                         session.setAttribute("NumeroViajeros", numViajeros);
+                        session.setAttribute("CapacidadVuelo", capacidad);
+                        
                     } else {
                         System.out.println("El numero de plazas solicitadas es mayor a las disponibles");
                     }

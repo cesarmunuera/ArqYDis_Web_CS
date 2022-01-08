@@ -21,6 +21,7 @@
         <%!
             Connection con;
             Statement set, set2;
+            ResultSet rs;
 
             String idVuelo, localizador = generarLocalizador();
 
