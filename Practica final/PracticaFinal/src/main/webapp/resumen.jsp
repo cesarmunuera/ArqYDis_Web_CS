@@ -19,6 +19,11 @@
     <body>
         <h1>Resumen de la compra</h1>
         <%!
+            Connection con;
+            Statement set, set2;
+
+            String idVuelo, localizador = generarLocalizador();
+
             private String generarLocalizador() {
                 String s = "";
                 int valor;
@@ -38,7 +43,9 @@
             }
         %>
 
-        Su localizador es : <%=(generarLocalizador())%>
+
+
+        Su localizador es : <%=localizador%>
         <br>
         <br>
         El numero de billetes es: <%=session.getAttribute("NumeroViajeros")%>, 
@@ -48,6 +55,19 @@
         <br>
         <br>
         PRECIO TOTAL: <%=session.getAttribute("Precio")%>
+
+        <%
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
+            set2 = con.createStatement();
+            set = con.createStatement();
+            rs = set2.executeQuery("SELECT ID FROM VUELOS WHERE ORIGEN = '" + session.getAttribute("Origen") + "' AND DESTINO = '" + session.getAttribute("Destino") + "' AND FECHA = '" + session.getAttribute("Fecha") + "'");
+
+            while (rs.next()) {
+                idVuelo = rs.getString("ID");
+            }
+
+            set.executeUpdate("INSERT INTO ESTADISTICAS VALUES ('" + session.getAttribute("Nombre").toString() + "', " + Integer.parseInt(session.getAttribute("NumeroViajeros").toString()) + ", '" + localizador + "', '" + idVuelo + "')");
+        %>
 
     </body>
 </html>

@@ -18,7 +18,8 @@
 
         <%!
             Connection con;
-            Statement set;
+            Statement set, set2;
+            ResultSet rs;
 
             public boolean actualizarViajes(String user, int viajes) {
                 boolean insertado = false;
@@ -35,13 +36,19 @@
                 return insertado;
             }
 
-            /*public boolean actualizarCapacidad(int plazasCompradas, int plazasDisponibles){
+            public boolean actualizarCapacidad(int plazasCompradas, int plazasDisponibles) {
                 boolean insertado = false;
+                String idVuelo;
                 int resultado;
                 try {
+                    rs = set2.executeQuery("SELECT ID FROM VUELOS WHERE ORIGEN = '" + session.getAttribute("Origen") + "' AND DESTINO = '" + session.getAttribute("Destino") + "' AND FECHA = '" + session.getAttribute("Fecha") + "'");
+                    while (rs.next()) {
+                        idVuelo = rs.getString("ID");
+                    }
+
                     resultado = plazasDisponibles - plazasCompradas;
                     set = con.createStatement();
-                    set.executeUpdate("INSERT INTO VUELOS VALUES ('" + user + "', '" + password + "', FALSE, 0)");
+                    set.executeUpdate("UPDATE VUELOS SET CAPACIDAD=" + resultado + "WHERE ID = '1'");
                     insertado = true;
                     System.out.println("Usuario introducido correctamente");
                     set.close();
@@ -50,7 +57,7 @@
                     System.out.println(e);
                 }
                 return insertado;
-            }*/
+            }
 
         %>
         El numero de billetes es: <%=session.getAttribute("NumeroViajeros")%>, 
@@ -141,7 +148,7 @@
             if (pagar != null) {                                                           //Actualizamos el numero de compras del cliente
 
                 String plazasDisp = (String) session.getAttribute("CapacidadVuelo");
-                int plazasDisponibles = Integer.parseInt(plazasDisp);
+                //int plazasDisponibles = Integer.parseInt(plazasDisp);
 
                 switch (Integer.parseInt(session.getAttribute("Viajes").toString())) {
                     case 0:
