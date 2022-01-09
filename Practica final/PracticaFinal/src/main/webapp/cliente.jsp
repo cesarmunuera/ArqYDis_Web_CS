@@ -36,7 +36,8 @@
             ResultSet rsCapacidad;
             ResultSet rsPrecio;
             int i = 1, precioTasas = 5, capacidad = 0;
-            double precioFinal, precio = 0;
+            double precioFinal = 0, precio = 0;
+            String ppp = "0";
             DecimalFormat df = new DecimalFormat("#.00");
         %>
         <%
@@ -88,7 +89,7 @@
                         <label>Fecha</label>
                         <br>
                         <br>
-                        <input type="date" id="fechas" name="fechas">
+                        <input type="date" id="fechas" name="fechas" value="2022-01-02" min="2021-01-01" max="2023-12-31">
                         <br>
                         <br>
                     </td>
@@ -158,7 +159,13 @@
                 System.out.println("Entrando en modo calcular precio");
                 String origen = request.getParameter("origen");
                 String destino = request.getParameter("destino");
-                String fecha = request.getParameter("fechas");
+                String fecha = "";
+
+                try {
+                    fecha = request.getParameter("fechas");
+                } catch (Exception e) {
+                }
+
                 String idaVuelta = (String) request.getParameter("idaVuelta");
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
                 rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
@@ -180,7 +187,7 @@
                             precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
                         }
                         //Guardamos en sesion los datos de la compra realizada
-                        double roundDbl = Math.round(precioFinal*100.0)/100.0;
+                        double roundDbl = Math.round(precioFinal * 100.0) / 100.0;
                         session.setAttribute("Precio", roundDbl + "");
                         session.setAttribute("Origen", origen);
                         session.setAttribute("Destino", destino);
@@ -188,7 +195,7 @@
                         session.setAttribute("IdaVuelta", idaVuelta);
                         session.setAttribute("NumeroViajeros", numViajeros);
                         session.setAttribute("CapacidadVuelo", capacidad);
-                        
+
                     } else {
                         System.out.println("El numero de plazas solicitadas es mayor a las disponibles");
                     }
@@ -198,9 +205,12 @@
             } else {
                 System.out.println("Modo null de pagar ...");
             }
+
+            ppp = df.format(precioFinal);
+                    
         %>
 
-        <input type="text" value="<%= df.format(precioFinal)%>" readonly onmousedown="return false;" class="botonPagar"/>
+        <input type="text" value="<%= ppp%>" readonly onmousedown="return false;" class="botonPagar"/>
 
         <br>
         <br>

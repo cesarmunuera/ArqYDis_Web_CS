@@ -172,9 +172,14 @@
                 //Logica de funcionamiento
                 if (regist != null) {
                     System.out.println("Entramos al modo registro");
-                    insertarUsuario(user, password);
-                    //Iniciamos sesion con el cliente que se acaba de registrar
-                    response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
+                    if (insertarUsuario(user, password)) {
+                        //Iniciamos sesion con el cliente que se acaba de registrar
+                        response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
+                    } else {
+                        System.out.println("El usuario ya existe");
+                        incorrecto = "El usuario ya existe";
+                    }
+
                 } else {
                     System.out.println("Entramos en el modo inicio de sesion");
                     if (existeUsuario(user)) {
