@@ -47,16 +47,16 @@
                     System.out.println(destino);
                     System.out.println(fecha);
                     set2 = con.createStatement();
-/*
+
                     rs = set2.executeQuery("SELECT ID FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
                     while (rs.next()) {
                         idVuelo = rs.getString("ID");
                     }
-*/
-                    //resultado = plazasDisponibles - plazasCompradas;
+
+                    resultado = Integer.parseInt(plazasDisponibles) - Integer.parseInt(plazasCompradas);
                     set = con.createStatement();
-                    //set.executeUpdate("UPDATE VUELOS SET CAPACIDAD=" + resultado + "WHERE ID = '" + idVuelo + "'");
-                    //session.setAttribute("idVuelo", idVuelo); no se puede actualizar aqui por eso la funcion es string y devuelve el id del vuelo :)
+                    set.executeUpdate("UPDATE VUELOS SET CAPACIDAD=" + resultado + "WHERE ID = '" + idVuelo + "'");
+                 
                     System.out.println("-----------------------------Capacidad actualizada correctamente---------------------------");
                     set.close();
                 } catch (Exception e) {
@@ -76,7 +76,6 @@
             String p = session.getAttribute("Precio").toString().trim();
             double precioFinal = Double.parseDouble(p);
             System.out.println("EL PRECIO OBTENIDO DE LA SESION ES: " + session.getAttribute("Precio").toString());
-            //double precioFinal = 1;
             String descuento = "";
             if (session.getAttribute("Viajes").equals(2)) {
                 System.out.println("Felicidades, obtienes un descuento");
@@ -154,9 +153,6 @@
             String pagar = request.getParameter("botonPagar");
             if (pagar != null) {                                                           //Actualizamos el numero de compras del cliente
 
-                String plazasDisp = (String) session.getAttribute("CapacidadVuelo");
-                //int plazasDisponibles = Integer.parseInt(plazasDisp);
-
                 switch (Integer.parseInt(session.getAttribute("Viajes").toString())) {
                     case 0:
                         System.out.println("Entrando en caso 0 ...........");
@@ -176,7 +172,6 @@
                 }
                 idVuelo = actualizarCapacidad(session.getAttribute("NumeroViajeros").toString(),session.getAttribute("CapacidadVuelo").toString(),session.getAttribute("Origen").toString(),session.getAttribute("Destino").toString(),session.getAttribute("Fecha").toString());
                 session.setAttribute("idVuelo", idVuelo);
-                //actualizarCapacidad(Integer.parseInt(session.getAttribute("NumeroViajeros").toString()),Integer.parseInt(session.getAttribute("CapacidadVuelo").toString()),session.getAttribute("Origen").toString(),session.getAttribute("Destino").toString(),session.getAttribute("Fecha").toString());
                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/resumen.jsp"));
             }
         %>

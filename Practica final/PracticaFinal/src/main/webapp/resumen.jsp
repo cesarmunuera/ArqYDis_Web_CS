@@ -21,23 +21,47 @@
         <%!
             Connection con;
             Statement set, set2;
-            ResultSet rs;
+            ResultSet rs, rs2;
 
-            String idVuelo, localizador = generarLocalizador();
+            String idVuelo, localizador = generarLocalizador() ;
 
             private String generarLocalizador() {
                 String s = "";
                 int valor;
+                boolean existe = true;
 
-                for (int i = 0; i < 3; i++) {
-                    Random random = new Random();
-                    char letraRandom = (char) (random.nextInt(26) + 'a');
-                    s = s + String.valueOf(letraRandom).toUpperCase();
-                }
+                while (existe) {
+                    for (int i = 0; i < 3; i++) {
+                        Random random = new Random();
+                        char letraRandom = (char) (random.nextInt(26) + 'a');
+                        s = s + String.valueOf(letraRandom).toUpperCase();
+                    }
 
-                for (int i = 0; i < 3; i++) {
-                    valor = (int) Math.floor(Math.random() * 9);
-                    s = s + valor;
+                    for (int i = 0; i < 3; i++) {
+                        valor = (int) Math.floor(Math.random() * 9);
+                        s = s + valor;
+                    }
+
+                    try {
+                        con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
+                        set2 = con.createStatement();
+
+                        rs2 = set2.executeQuery("SELECT LOCALIZADOR FROM ESTADISTICAS");
+                        while (rs2.next()) {
+                            System.out.println("El localizador es: " + rs2.getString("LOCALIZADOR").toString());
+                            if (rs2.getString("LOCALIZADOR").equals(s)) {
+                                existe = true;
+                                break;
+                            } else {
+                                existe = false;
+                            }
+                        }
+                        rs2.close();
+                        set2.close();
+                    } catch (Exception e) {
+                        System.out.println("No se ha podido actualizar el viaje");
+                        System.out.println(e);
+                    }
                 }
 
                 return s;
@@ -59,16 +83,16 @@
 
         <%
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
-            set2 = con.createStatement();
             set = con.createStatement();
-            rs = set2.executeQuery("SELECT ID FROM VUELOS WHERE ORIGEN = '" + session.getAttribute("Origen") + "' AND DESTINO = '" + session.getAttribute("Destino") + "' AND FECHA = '" + session.getAttribute("Fecha") + "'");
 
-            while (rs.next()) {
-                idVuelo = rs.getString("ID");
-            }
+            idVuelo = (String) session.getAttribute("idVuelo");
 
             set.executeUpdate("INSERT INTO ESTADISTICAS VALUES ('" + session.getAttribute("Nombre").toString() + "', " + Integer.parseInt(session.getAttribute("NumeroViajeros").toString()) + ", '" + localizador + "', '" + idVuelo + "')");
         %>
+        
+        <br>
+        <br>
+        <a href="index.jsp">Volver a inicio</a>
 
     </body>
 </html>

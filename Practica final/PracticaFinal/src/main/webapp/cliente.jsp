@@ -162,7 +162,7 @@
                 String idaVuelta = (String) request.getParameter("idaVuelta");
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
                 rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
-                //session.setAttribute("CapacidadVuelo", rsCapacidad.getString("CAPACIDAD"));
+
                 //Logica de funcionamiento
                 while (rsCapacidad.next()) {
                     capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
