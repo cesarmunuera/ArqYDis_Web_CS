@@ -48,7 +48,7 @@
                         <input type="text" name="destino"/>
                         <br>
                         <br>
-                        <input type="date" name="fecha">
+                        <input type="date" id="fechas" name="fechas" value="2022-01-03" min="2021-01-01" max="2023-12-31">
                         <br>
                         <br>
                         <input type="text" name="precio"/>
@@ -75,6 +75,7 @@
         Statement set;
         ResultSet rs;
         int valor;
+        String resultado = "";
 
         // Funciones auxiliares
         public boolean existeID(String id) {
@@ -99,16 +100,16 @@
             return (existe);
         }
 
-        public boolean insertarVuelo(String id, String origen, String destino, int precio) {
+        public boolean insertarVuelo(String id, String origen, String destino, int precio, String fecha) {
             boolean insertado = false;
             try {
                 if (existeID(id)) {
-                    System.out.println("El vuelo ya existe perraco");
+                    System.out.println("El vuelo ya existe");
+                    insertado = false;
                 } else {
-                    set = con.createStatement();    //FALTA LA FECHA A LA QUERY
-                    set.executeUpdate("INSERT INTO VUELOS VALUES ('" + id + "', '" + origen + "', '" + destino + "', 75, '" + precio + "')");
+                    set = con.createStatement();
+                    set.executeUpdate("INSERT INTO VUELOS VALUES ('" + id + "', '" + origen.toUpperCase() + "', '" + destino.toUpperCase() + "', '" + fecha + "', 75, " + precio + ")");
                     insertado = true;               //Suponemos que los vuelos siempre parten de 75 plazas
-                    System.out.println("Usuario introducido correctamente");
                 }
                 rs.close();
                 set.close();
@@ -118,8 +119,6 @@
             }
             return insertado;
         }
-
-
     %>
     <%
         //Creamos la conexion con la base de datos, esto es el driver
@@ -133,21 +132,25 @@
             String origen = request.getParameter("origen");
             String destino = request.getParameter("destino");
             int precio = Integer.parseInt(request.getParameter("precio"));
-            //Falta la fecha
+            String fecha = request.getParameter("fechas");
 
             //Logica de funcionamiento
-            valor = (int) Math.floor(Math.random() * 100 + 1);
-            String id = String.valueOf(valor);          //Pasamos a String para poder comparar
-            //FALTA LA FECHA
-            if (insertarVuelo(id, origen, destino, precio)) {
+            valor = (int) Math.floor(Math.random() * 100 + 1);  //Sacamos un random para la id del vuelo
+            String id = String.valueOf(valor);                  //Pasamos a String para poder comparar
+
+            if (insertarVuelo(id, origen, destino, precio, fecha)) {
                 System.out.println("Vuelo insertado correctamente");
-            } else{
+                resultado = "Vuelo insertado correctamente";
+            } else {
                 System.out.println("Fallo al insertar el vuelo");
+                resultado = "Fallo al insertar el vuelo";
             }
         } else {
             System.out.println("Modo null ...");
         }
     %>
+
+    <%=resultado + ""%>
 
 </body>
 

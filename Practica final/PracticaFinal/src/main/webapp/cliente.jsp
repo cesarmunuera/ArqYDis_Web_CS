@@ -36,9 +36,8 @@
             ResultSet rsCapacidad;
             ResultSet rsPrecio;
             int i = 1, precioTasas = 5, capacidad = 0;
-            double precioFinal = 0, precio = 0;
+            double precioFinal = 0, precio = 0, roundDbl;
             String ppp = "0";
-            DecimalFormat df = new DecimalFormat("#.00");
         %>
         <%
             c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
@@ -159,12 +158,8 @@
                 System.out.println("Entrando en modo calcular precio");
                 String origen = request.getParameter("origen");
                 String destino = request.getParameter("destino");
-                String fecha = "";
+                String fecha = request.getParameter("fechas");
 
-                try {
-                    fecha = request.getParameter("fechas");
-                } catch (Exception e) {
-                }
 
                 String idaVuelta = (String) request.getParameter("idaVuelta");
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
@@ -173,6 +168,8 @@
                 //Logica de funcionamiento
                 while (rsCapacidad.next()) {
                     capacidad = Integer.parseInt(rsCapacidad.getString("CAPACIDAD"));
+                    System.out.println("La capacidad es: " + capacidad);
+                    // TODO: ARREGLAR EL AVISO SI LOS DATOS INTRODUCIDOS NO SON CORRECTOS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 }
                 System.out.println("La capacidad es: " + capacidad);
                 if (capacidad > 0) {
@@ -187,7 +184,7 @@
                             precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
                         }
                         //Guardamos en sesion los datos de la compra realizada
-                        double roundDbl = Math.round(precioFinal * 100.0) / 100.0;
+                        roundDbl = Math.round(precioFinal * 100.0) / 100.0;
                         session.setAttribute("Precio", roundDbl + "");
                         session.setAttribute("Origen", origen);
                         session.setAttribute("Destino", destino);
@@ -204,13 +201,10 @@
                 }
             } else {
                 System.out.println("Modo null de pagar ...");
-            }
-
-            ppp = df.format(precioFinal);
-                    
+            }       
         %>
 
-        <input type="text" value="<%= ppp%>" readonly onmousedown="return false;" class="botonPagar"/>
+        <input type="text" value="<%= roundDbl + " €" %>" readonly onmousedown="return false;" class="botonPagar"/>
 
         <br>
         <br>
