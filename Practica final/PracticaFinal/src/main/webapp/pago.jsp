@@ -2,7 +2,15 @@
 <%@page import="java.util.*"%>
 <%@page import="java.sql.*"%>
 <!DOCTYPE html>
-
+<% try {
+        if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
+            session.invalidate();
+            response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+        }
+    } catch (Exception e) {
+        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+    }
+%>
 <html>
     <head>
         <meta charset="UTF-8">

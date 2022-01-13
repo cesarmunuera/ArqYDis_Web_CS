@@ -2,7 +2,15 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 <!DOCTYPE html>
-
+<% try {
+        if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
+            session.invalidate();
+            response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+        }
+    } catch (Exception e) {
+        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+    }
+%>
 <html>
     <head>
         <meta charset="UTF-8">
@@ -18,12 +26,13 @@
 
         <%!
             Connection con;
-            Statement setID, setViajeros, setPrecio, setNombre;
-            ResultSet rsID, rsViajeros, rsPrecio, rsNombre;
+            Statement setID, setViajeros, setPrecio, setNombre, setVuelos;
+            ResultSet rsID, rsViajeros, rsPrecio, rsNombre, rsVuelos;
             int contadorViajeros, gananciaTotal;
             ArrayList alViajeros = new ArrayList();
             ArrayList alGanancias = new ArrayList();
             ArrayList alNombres = new ArrayList();
+            ArrayList alVuelos = new ArrayList();
         %>
 
         <%
@@ -35,6 +44,7 @@
             //Vaciamos los arrays para evitar datos duplicados por pantalla
             alViajeros.clear();
             alGanancias.clear();
+            alVuelos.clear();
             gananciaTotal = 0;
 
             while (rsID.next()) {
@@ -64,58 +74,86 @@
 
             }
 
+            setVuelos = con.createStatement();
+            rsVuelos = setNombre.executeQuery("SELECT COUNT(ORIGEN),FECHA FROM VUELOS GROUP BY FECHA");
+            while (rsVuelos.next()) {
+                alVuelos.add("La cantidad de vuelos es " + rsVuelos.getString("1") + " para la fecha " + rsVuelos.getString("FECHA") + " .");
+            }
+
             setID.close();
             setViajeros.close();
             setPrecio.close();
             setNombre.close();
+            setVuelos.close();
             rsID.close();
+            rsVuelos.close();
             rsNombre.close();
             rsViajeros.close();
             rsPrecio.close();
 
-            for (int i = 0; i < alViajeros.size(); i++) {
         %>
 
-        <br>
-        <br>
-        <%=alViajeros.get(i)%>  
+        <table>
+
+            <td>
+                <%                    for (int i = 0; i < alViajeros.size(); i++) {
+                %>
+                <br>
+                <%=alViajeros.get(i)%>  
+
+                <%
+                    }
+                %>
+            </td>
+            <td><%="     "%></td>
+            <td>
+                <%
+                    for (int i = 0; i < alGanancias.size(); i++) {
+                %>
+                <br>
+                <%=alGanancias.get(i)%>  
+
+                <%
+                    }
+                %>
+                <br>
+                <%="La ganancia total es de " + gananciaTotal + " €."%> 
+            </td>
+            <td><%="     "%></td>
+            <td>
+                <%
+                    for (int i = 0; i < alNombres.size(); i++) {
+                %>
+                <br>
+                <%=alNombres.get(i)%>  
+
+                <%
+                    }
+                %>
+            </td>
+            <td><%="     "%></td>
+            <td>
+                <ol>
+                    <%
+                        for (int i = 0; i < alVuelos.size(); i++) {
+                    %>
+                    <br>
+                    <li><%=alVuelos.get(i)%></li>
+
+                    <%
+                        }
+                    %>
+                </ol>
+            </td>
+
+        </table>
+
 
         <%
-            }
-        %>
-        <br>
-        <br>
-        <br>
-        <br>
-        <%
-            for (int i = 0; i < alGanancias.size(); i++) {
+            session.invalidate();
         %>
 
-        <br>
-        <br>
-        <%=alGanancias.get(i)%>  
-
-        <%
-            }
-        %>
-        <br>
-        <br>
-        <br>
-        <br>
-        <%="La ganancia total es de " + gananciaTotal + " €."%>  
-        <br>
-        <br>
-        <%
-            for (int i = 0; i < alNombres.size(); i++) {
-        %>
-
-        <br>
-        <br>
-        <%=alNombres.get(i)%>  
-
-        <%
-            }
-        %>
+        <a href="index.jsp">Volver a inicio</a>
 
     </body>
 </html>

@@ -5,7 +5,17 @@
 <%@ page import="java.util.Random"%>
 
 <!DOCTYPE html>
+<% try {
+        if (session.getAttribute("tipoUsuario").toString().compareTo("admin") != 0) {
+            session.invalidate();
+            response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+        }
+    } catch (Exception e) {
+        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
 
+    }
+
+%>
 <html lang="es" manifest="mimanifest.manifest">
 
     <head>
@@ -62,6 +72,9 @@
         <br>
 
         <input type="submit" name="registro" id="Generar Vuelo" value="Generar Vuelo" class="botonesGenerarVuelo">
+
+        <input type="submit" name="volver" value="Volver a inicio" class="botonesGenerarVuelo">
+
     </form>
 
     <br>
@@ -120,8 +133,7 @@
             return insertado;
         }
     %>
-    <%
-        //Creamos la conexion con la base de datos, esto es el driver
+    <%        //Creamos la conexion con la base de datos, esto es el driver
         con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
 
         //Comprobamos primero que el boton este marcado para evitar errores
@@ -147,6 +159,13 @@
             }
         } else {
             System.out.println("Modo null ...");
+        }
+
+        //Comprobamos primero que el boton este marcado para evitar errores
+        String r = (String) request.getParameter("volver");
+        if (r != null) {
+            session.invalidate();
+            response.sendRedirect(response.encodeRedirectURL("index.jsp"));
         }
     %>
 

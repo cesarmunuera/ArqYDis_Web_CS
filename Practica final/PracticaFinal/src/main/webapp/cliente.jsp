@@ -2,6 +2,15 @@
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <!DOCTYPE html>
+<% try {
+        if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
+            session.invalidate();
+            response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+        }
+    } catch (Exception e) {
+        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+    }
+%>
 <html lang="es" manifest="mimanifest.manifest">
 
     <head>

@@ -174,6 +174,7 @@
                     System.out.println("Entramos al modo registro");
                     if (insertarUsuario(user, password)) {
                         //Iniciamos sesion con el cliente que se acaba de registrar
+                        session.setAttribute("tipoUsuario", "cliente");
                         response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                     } else {
                         System.out.println("El usuario ya existe");
@@ -189,12 +190,15 @@
                                 //Aqui no tiene sentido setear el numero de viajes, ya que el admin no compra
                                 session.setAttribute("Nombre", user);
                                 incorrecto = "";
+                                session.setAttribute("tipoUsuario", "admin");
+
                                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.jsp"));
                             } else {
                                 System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
                                 session.setAttribute("Nombre", user);
                                 session.setAttribute("Viajes", numeroViajes(user));
                                 incorrecto = "";
+                                session.setAttribute("tipoUsuario", "cliente");
                                 response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                             }
                         } else {

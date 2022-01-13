@@ -4,7 +4,15 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.sql.*"%>
 <!DOCTYPE html>
-
+<% try {
+        if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
+            session.invalidate();
+            response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+        }
+    } catch (Exception e) {
+        response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+    }
+%>
 
 <html lang="es" manifest="mimanifest.manifest">
 
@@ -23,7 +31,7 @@
             Statement set, set2;
             ResultSet rs, rs2;
 
-            String idVuelo, localizador = generarLocalizador() ;
+            String idVuelo, localizador = generarLocalizador();
 
             private String generarLocalizador() {
                 String s = "";
@@ -89,9 +97,14 @@
 
             set.executeUpdate("INSERT INTO ESTADISTICAS VALUES ('" + session.getAttribute("Nombre").toString() + "', " + Integer.parseInt(session.getAttribute("NumeroViajeros").toString()) + ", '" + localizador + "', '" + idVuelo + "')");
         %>
-        
+
         <br>
         <br>
+
+        <%
+            session.invalidate();
+        %>
+
         <a href="index.jsp">Volver a inicio</a>
 
     </body>
