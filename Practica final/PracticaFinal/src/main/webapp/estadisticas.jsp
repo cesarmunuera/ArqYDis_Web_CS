@@ -96,42 +96,55 @@
         <table>
 
             <td>
-                <%                    for (int i = 0; i < alViajeros.size(); i++) {
-                %>
-                <br>
-                <%=alViajeros.get(i)%>  
+                <ol>
+                    <%                    
+                        for (int i = 0; i < alViajeros.size(); i++) {
+                    %>
+                    <br>
+                    <%=alViajeros.get(i)%>  
 
-                <%
-                    }
-                %>
+                    <%
+                        }
+                    %>
+                </ol>
             </td>
+
             <td><%="     "%></td>
+
             <td>
-                <%
-                    for (int i = 0; i < alGanancias.size(); i++) {
-                %>
-                <br>
-                <%=alGanancias.get(i)%>  
+                <ol>
+                    <%
+                        for (int i = 0; i < alGanancias.size(); i++) {
+                    %>
+                    <br>
+                    <%=alGanancias.get(i)%>  
 
-                <%
-                    }
-                %>
-                <br>
-                <%="La ganancia total es de " + gananciaTotal + " €."%> 
+                    <%
+                        }
+                    %>
+                    <br>
+                    <%="La ganancia total es de " + gananciaTotal + " €."%> 
+                </ol>
             </td>
+
             <td><%="     "%></td>
+
             <td>
-                <%
-                    for (int i = 0; i < alNombres.size(); i++) {
-                %>
-                <br>
-                <%=alNombres.get(i)%>  
+                <ol>
+                    <%
+                        for (int i = 0; i < alNombres.size(); i++) {
+                    %>
+                    <br>
+                    <%=alNombres.get(i)%>  
 
-                <%
-                    }
-                %>
+                    <%
+                        }
+                    %>
+                </ol>
             </td>
+
             <td><%="     "%></td>
+
             <td>
                 <ol>
                     <%
