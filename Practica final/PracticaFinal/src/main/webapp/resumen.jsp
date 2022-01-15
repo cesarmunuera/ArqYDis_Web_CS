@@ -6,10 +6,12 @@
 <!DOCTYPE html>
 <% try {
         if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
+            System.out.println("Estamos en el try, el usuario es: " + session.getAttribute("tipoUsuario").toString());
             session.invalidate();
             response.sendRedirect(response.encodeRedirectURL("index.jsp"));
         }
     } catch (Exception e) {
+        System.out.println("Estamos en el catch, el usuario es: " + session.getAttribute("tipoUsuario").toString());
         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
     }
 %>

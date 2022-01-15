@@ -3,11 +3,13 @@
 <%@ page import="java.sql.*"%>
 <!DOCTYPE html>
 <% try {
-        if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
+        if (session.getAttribute("tipoUsuario").toString().compareTo("admin") != 0) {
+            System.out.println("Estamos en el try, el usuario es: " + session.getAttribute("tipoUsuario").toString());
             session.invalidate();
             response.sendRedirect(response.encodeRedirectURL("index.jsp"));
         }
     } catch (Exception e) {
+        System.out.println("Estamos en el catch");
         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
     }
 %>
@@ -97,8 +99,7 @@
 
             <td>
                 <ol>
-                    <%                    
-                        for (int i = 0; i < alViajeros.size(); i++) {
+                    <%                        for (int i = 0; i < alViajeros.size(); i++) {
                     %>
                     <br>
                     <%=alViajeros.get(i)%>  
