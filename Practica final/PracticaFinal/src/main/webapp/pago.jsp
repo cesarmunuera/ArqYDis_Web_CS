@@ -2,13 +2,19 @@
 <%@page import="java.util.*"%>
 <%@page import="java.sql.*"%>
 <!DOCTYPE html>
-<% try {
+<% 
+    System.out.println("Vamos a entrar en el try");
+    try {
+        System.out.println("Vamos a entrar al IF");
         if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
+            System.out.println("Hemos entrado en el IF");
             session.invalidate();
             response.sendRedirect(response.encodeRedirectURL("index.jsp"));
         }
     } catch (Exception e) {
+        System.out.println("Hemos entrado en el catch");
         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
+        System.out.println("Se supone que hemos redirigido");
     }
 %>
 <html>
