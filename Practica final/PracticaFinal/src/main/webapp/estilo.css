@@ -1,25 +1,42 @@
 /* ------------------- index.html -------------------*/
-
+body{
+    background-image: url("vuelos.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+    
+}
 .inicio{
-    position: relative;
-    left: 850px;
+    margin-top: 5%;;
+    margin-left: 17%;
+}
+#iniciosesion{
+    margin-left: 17%;
+    font-style: italic;
 }
 
 .botonEnviar{
-    position: relative;
-    left: 0px;
+    margin-left: 8%;
+}
+.correcion{
+    margin-left: 300px;
 }
 
 /* ------------------- admin.html -------------------*/
 
 .inicioAdmin{
-    position: relative;
-    left: 650px;
+    margin-left: 17%;
+}
+#tituloGenerador{
+    margin-left: 17%;
+    font-style: italic;
 }
 
-.botonesGenerarVuelo{
-    position: relative;
-    left: 700px;
+.botonGenerarVuelo{
+  margin-left: 17%;
+}
+.botonGenerarEstadistica{
+    margin-left: 17%;
 }
 
 /* ------------------- cliente.html -------------------*/

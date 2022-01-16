@@ -28,17 +28,17 @@
     </head>
 
     <body>
-        <h1>
-            <center>Generador de vuelos (ADMINISTRADOR)</center>
+        <h1 id="tituloGenerador">
+            Generador de vuelos (ADMINISTRADOR)
         </h1>
 
         <br>
         <br>
         <br>
 
-        <table>
+        <table class="inicioAdmin">
             <form action="" method="POST">
-                <tr class="inicioAdmin">
+                <tr >
                     <td>    
                         <label>Origen</label>
                         <br>
@@ -71,9 +71,9 @@
         <br>
         <br>
 
-        <input type="submit" name="registro" id="Generar Vuelo" value="Generar Vuelo" class="botonesGenerarVuelo">
+        <input type="submit" name="registro" id="Generar Vuelo" value="Generar Vuelo" class="botonGenerarVuelo">
 
-        <input type="submit" name="volver" value="Volver a inicio" class="botonesGenerarVuelo">
+        <input type="submit" name="volver" value="Volver a inicio" class="botonVolverInicio">
 
     </form>
 
@@ -81,7 +81,7 @@
     <br>
     <br>
 
-    <a href="estadisticas.jsp" class="botonesGenerarVuelo"><button>Mirar estadist&iacute;cas</button></a>
+    <a href="estadisticas.jsp" class="botonGenerarEstadistica"><button>Mirar estadist&iacute;cas</button></a>
 
     <%!
         Connection con;
