@@ -133,7 +133,7 @@
 
             <br>
 
-            <div class="inicio">
+            <div class="calcularPrecio">
                 <input type="submit" value="Calcular Precio" name="botonCalcularPrecio">
 
             </div>
