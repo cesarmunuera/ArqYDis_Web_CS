@@ -1,7 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.*"%>
 <!DOCTYPE html>
+
 <% try {
         if (session.getAttribute("tipoUsuario").toString().compareTo("admin") != 0) {
             System.out.println("Estamos en el try, el usuario es: " + session.getAttribute("tipoUsuario").toString());
@@ -13,6 +14,7 @@
         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
     }
 %>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -24,7 +26,6 @@
     </head>
     <body>
         <h1>Panel de estad&iacute;sticas</h1>
-
 
         <%!
             Connection con;
@@ -73,7 +74,6 @@
                 while (rsNombre.next()) {
                     alNombres.add("El vuelo con ID " + rsID.getString("ID_VUELO") + " tiene al usuario " + rsNombre.getString("NOMBRE_CLIENTE") + " .");
                 }
-
             }
 
             setVuelos = con.createStatement();
@@ -92,16 +92,17 @@
             rsNombre.close();
             rsViajeros.close();
             rsPrecio.close();
-
         %>
 
         <table>
 
             <td>
                 <ol>
-                    <%                        for (int i = 0; i < alViajeros.size(); i++) {
+                    <%
+                        for (int i = 0; i < alViajeros.size(); i++) {
                     %>
                     <br>
+                    
                     <%=alViajeros.get(i)%>  
 
                     <%
@@ -159,15 +160,12 @@
                     %>
                 </ol>
             </td>
-
         </table>
-
 
         <%
             session.invalidate();
         %>
 
         <a href="index.jsp">Volver a inicio</a>
-
     </body>
 </html>

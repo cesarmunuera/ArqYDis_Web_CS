@@ -17,7 +17,6 @@
 %>
 
 <html lang="es" manifest="mimanifest.manifest">
-
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -73,12 +72,9 @@
                         System.out.println(e);
                     }
                 }
-
                 return s;
             }
         %>
-
-
 
         Su localizador es : <%=localizador%>
         <br>
@@ -108,6 +104,5 @@
         %>
 
         <a href="index.jsp">Volver a inicio</a>
-
     </body>
 </html>

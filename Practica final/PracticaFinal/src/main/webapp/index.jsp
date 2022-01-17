@@ -1,12 +1,10 @@
 <%@page import="java.io.IOException"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.*"%>
 <!DOCTYPE html>
 
-
 <html lang="es" manifest="mimanifest.manifest">
-
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,12 +13,11 @@
         <link rel="stylesheet" type="text/css" href="estilo.css">
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
-
+    
     <body>
         <h1 id="iniciosesion">
              Inicio de sesi&oacute;n
         </h1>
-        
             <form action="" method="POST">
                 <div class="inicio">
 
@@ -44,8 +41,6 @@
                 <br>
 
                 <input type="submit" name="enviar" value="Enviar" class="botonEnviar">
-
-
                 </div>
             </form>
 
@@ -125,6 +120,7 @@
                         while (rs.next()) {
                             cad = rs.getBoolean("TIPO");
                         }
+
                         rs.close();
                         set.close();
                     } catch (Exception e) {
@@ -153,7 +149,6 @@
                     }
                     return insertado;
                 }
-
             %>
 
             <%
@@ -180,7 +175,6 @@
                             System.out.println("El usuario ya existe");
                             incorrecto = "El usuario ya existe";
                         }
-
                     } else {
                         System.out.println("Entramos en el modo inicio de sesion");
                         if (existeUsuario(user)) {
@@ -195,10 +189,12 @@
                                     response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/admin.jsp"));
                                 } else {
                                     System.out.println("El usuario existe y su contraseña es correcta, es un cliente");
+                                    
                                     session.setAttribute("Nombre", user);
                                     session.setAttribute("Viajes", numeroViajes(user));
                                     incorrecto = "";
                                     session.setAttribute("tipoUsuario", "cliente");
+                                    
                                     response.sendRedirect(response.encodeRedirectURL("/PracticaFinal/cliente.jsp"));
                                 }
                             } else {
@@ -213,12 +209,7 @@
                 } else {
                     System.out.println("Modo null ...");
                 }
-
-
             %>
-
             <label class="correcion"> <%=incorrecto + ""%></label>
-
     </body>
-
 </html>

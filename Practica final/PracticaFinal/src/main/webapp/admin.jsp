@@ -1,8 +1,8 @@
 <%@page import="java.io.IOException"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="java.util.*"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="java.util.Random"%>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.*"%>
+<%@page import="java.util.Random"%>
 
 <!DOCTYPE html>
 <% try {
@@ -12,10 +12,9 @@
         }
     } catch (Exception e) {
         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
-
     }
-
 %>
+
 <html lang="es" manifest="mimanifest.manifest">
 
     <head>
@@ -133,7 +132,9 @@
             return insertado;
         }
     %>
-    <%        //Creamos la conexion con la base de datos, esto es el driver
+
+    <%
+        //Creamos la conexion con la base de datos, esto es el driver
         con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
 
         //Comprobamos primero que el boton este marcado para evitar errores

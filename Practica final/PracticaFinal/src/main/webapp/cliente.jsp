@@ -1,7 +1,13 @@
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="java.text.ParseException"%>
 <%@page import="java.text.SimpleDateFormat"%>
+<%@page import="java.io.IOException"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.sql.*"%>
+<%@page import="java.util.regex.Pattern"%>
+<%@page import="java.text.DateFormat"%>
 <!DOCTYPE html>
+
 <% try {
         if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
             session.invalidate();
@@ -11,6 +17,7 @@
         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
     }
 %>
+
 <html lang="es" manifest="mimanifest.manifest">
 
     <head>
@@ -27,13 +34,6 @@
             <center>Compra de billetes</center>
         </h1>
 
-        <%@ page import="java.io.IOException"%>
-        <%@ page contentType="text/html" pageEncoding="UTF-8"%>
-        <%@ page import="java.sql.*"%>
-        <%@page import="java.util.regex.Pattern"%>
-        <%@page import="java.text.DateFormat"%>
-
-
         <%!
             Connection c;
             Statement sOrigen;
@@ -48,6 +48,7 @@
             double precioFinal = 0, precio = 0, roundDbl;
             String ppp = "0";
         %>
+        
         <%
             c = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
             sOrigen = c.createStatement();
@@ -57,6 +58,7 @@
             rsOrigen = sOrigen.executeQuery("SELECT DISTINCT ORIGEN FROM VUELOS");
             rsDestino = sDestino.executeQuery("SELECT DISTINCT DESTINO FROM VUELOS");
         %>
+        
         <br>
         <br>
 
@@ -65,10 +67,8 @@
                 <tr class="espacioColumnas">
                     <td class="espacioColumnas1">
                         <label>Origen</label>
-
                         <br>
                         <br>
-
                         <select name="origen">
                             <% while (rsOrigen.next()) {%>
                             <option value="<%= rsOrigen.getString(1)%>" name="nombreOrigen">
@@ -80,10 +80,8 @@
 
                     <td class="espacioColumnas2">
                         <label>Destino</label>
-
                         <br>
                         <br>
-
                         <select name="destino">
                             <% while (rsDestino.next()) {%>
                             <option value="<%= rsDestino.getString(1)%>" name="nombreDestino">
@@ -138,7 +136,6 @@
 
             </div>
         </form>
-
         <br>
         <br>
         <br>
@@ -157,21 +154,20 @@
             }
         %>
 
-
         <%
             //Creamos la conexion con la base de datos, esto es el driver
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
             String pagar = request.getParameter("botonCalcularPrecio");
             //Obtenemos parametros del submit del html
             if (pagar != null) {
+                
                 System.out.println("Entrando en modo calcular precio");
                 String origen = request.getParameter("origen");
                 String destino = request.getParameter("destino");
                 String fecha = request.getParameter("fechas");
-
-
                 String idaVuelta = (String) request.getParameter("idaVuelta");
                 int numViajeros = Integer.parseInt(request.getParameter("num_viajeros"));
+                
                 rsCapacidad = sCapacidad.executeQuery("SELECT CAPACIDAD FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
 
                 //Logica de funcionamiento
@@ -181,6 +177,7 @@
                     // TODO: ARREGLAR EL AVISO SI LOS DATOS INTRODUCIDOS NO SON CORRECTOS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 }
                 System.out.println("La capacidad es: " + capacidad);
+                
                 if (capacidad > 0) {
                     if (numViajeros <= capacidad) {
                         rsPrecio = sPrecio.executeQuery("SELECT PRECIO FROM VUELOS WHERE ORIGEN = '" + origen + "' AND DESTINO = '" + destino + "' AND FECHA = '" + fecha + "'");
@@ -192,6 +189,7 @@
                         if (idaVuelta != null) {
                             precioFinal = precioFinal * 1.5; //la vuelta sale a la mitad del precio
                         }
+                        
                         //Guardamos en sesion los datos de la compra realizada
                         roundDbl = Math.round(precioFinal * 100.0) / 100.0;
                         session.setAttribute("Precio", roundDbl + "");
@@ -210,16 +208,12 @@
                 }
             } else {
                 System.out.println("Modo null de pagar ...");
-            }       
+            }
         %>
 
-        <input type="text" value="<%= roundDbl + " €" %>" readonly onmousedown="return false;" class="botonPagar"/>
-
+        <input type="text" value="<%= roundDbl + " €"%>" readonly onmousedown="return false;" class="botonPagar"/>
         <br>
         <br>
-
         <a href="pago.jsp" class="botonPagar" type="reset"><button>Ir al carro</button></a>
-
     </body>
-
 </html>

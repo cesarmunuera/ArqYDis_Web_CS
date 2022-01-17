@@ -17,6 +17,7 @@
         System.out.println("Se supone que hemos redirigido");
     }
 %>
+
 <html>
     <head>
         <meta charset="UTF-8">
@@ -79,11 +80,12 @@
                 }
                 return idVuelo;
             }
-
         %>
+        
         El numero de billetes es: <%=session.getAttribute("NumeroViajeros")%>, 
         con origen <%=session.getAttribute("Origen")%> y destino
         <%=session.getAttribute("Destino")%>.
+        
         <%
             //Creamos la conexion con la base de datos, esto es el driver
             con = DriverManager.getConnection("jdbc:derby://localhost:1527/sample", "app", "app");
@@ -91,6 +93,7 @@
             double precioFinal = Double.parseDouble(p);
             System.out.println("EL PRECIO OBTENIDO DE LA SESION ES: " + session.getAttribute("Precio").toString());
             String descuento = "";
+            
             if (session.getAttribute("Viajes").equals(2)) {
                 System.out.println("Felicidades, obtienes un descuento");
                 precioFinal = precioFinal * 0.5;
@@ -99,6 +102,7 @@
                 descuento = "El precio final es de " + precioFinal + " €";
             }
         %>   
+        
         <%=descuento%>
 
         <br>
@@ -163,10 +167,10 @@
             <input type="submit" value="Pagar" name="botonPagar" class="botonPagar">
         </form>
         <br>
+        
         <%
             String pagar = request.getParameter("botonPagar");
             if (pagar != null) {                                                           //Actualizamos el numero de compras del cliente
-
                 switch (Integer.parseInt(session.getAttribute("Viajes").toString())) {
                     case 0:
                         System.out.println("Entrando en caso 0 ...........");
@@ -190,5 +194,4 @@
             }
         %>
     </body>
-
 </html>

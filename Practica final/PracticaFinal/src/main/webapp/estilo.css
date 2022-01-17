@@ -3,13 +3,13 @@ body{
     background-image: url("vuelos.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    
-    
 }
+
 .inicio{
     margin-top: 5%;;
     margin-left: 17%;
 }
+
 #iniciosesion{
     margin-left: 17%;
     font-style: italic;
@@ -18,15 +18,16 @@ body{
 .botonEnviar{
     margin-left: 8%;
 }
+
 .correcion{
     margin-left: 300px;
 }
 
 /* ------------------- admin.html -------------------*/
-
 .inicioAdmin{
     margin-left: 17%;
 }
+
 #tituloGenerador{
     margin-left: 17%;
     font-style: italic;
@@ -35,12 +36,12 @@ body{
 .botonGenerarVuelo{
   margin-left: 17%;
 }
+
 .botonGenerarEstadistica{
     margin-left: 17%;
 }
 
 /* ------------------- cliente.html -------------------*/
-
 .espacioColumnas{
     position: relative;
     left: 300px;
