@@ -44,39 +44,43 @@ body{
 /* ------------------- cliente.html -------------------*/
 .espacioColumnas{
     position: relative;
-    left: 300px;
+    left: 30%;
 }
 
 .espacioColumnas1{
     position: relative;
-    left: 100px;
+    left: 10%;
 }
 
 .espacioColumnas2{
     position: relative;
-    left: 200px;
+    left: 20%;
 }
 
 .espacioColumnas3{
     position: relative;
-    left: 300px;
+    left: 30%;
 }
 
 .espacioColumnas4{
     position: relative;
-    left: 400px;
+    left: 40%;
 }
 
 .espacioColumnas5{
     position: relative;
-    left: 500px;
+    left: 50%;
 }
 
 .botonPagar{
     position: relative;
-    left: 725px;
+    left: 20%;
 }
 .calcularPrecio{
-    margin-top: 6%;
-    margin-left: 30%;
+    margin-top: 4%;
+    margin-left: 20%;
+}
+.tituloCompra{
+    margin-left: 17%;
+    font-style: italic;
 }

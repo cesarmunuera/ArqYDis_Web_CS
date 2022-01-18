@@ -3,7 +3,7 @@
 <%@page import="java.sql.*"%>
 <!DOCTYPE html>
 <% 
-    System.out.println("Vamos a entrar en el try");
+    /*System.out.println("Vamos a entrar en el try");
     try {
         System.out.println("Vamos a entrar al IF");
         if (session.getAttribute("tipoUsuario").toString().compareTo("cliente") != 0) {
@@ -15,7 +15,7 @@
         System.out.println("Hemos entrado en el catch");
         response.sendRedirect(response.encodeRedirectURL("index.jsp"));
         System.out.println("Se supone que hemos redirigido");
-    }
+    }*/
 %>
 
 <html>
